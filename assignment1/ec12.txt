@@ -1,0 +1,45 @@
+On a Smarter Planet, information-centric processes are exploding in
+growth. In order to excel in todays competitive environment, businesses
+need to support these processes, and efficiently manage the massive
+volumes of data they drive, with minimal risk. The mainframe has always
+been the IT industry's leading platform for transaction processing,
+consolidated and secure data serving, and for supporting enterprise-wide
+applications.
+
+With the IBM zEnterprise® System, IBM extends the mainframe platform to
+help large enterprises reshape the IT experience for their customers.
+Enterprises can also drive intelligent insights, in near real time, to
+improve business performance and reduce risk. Use of the zEnterprise
+BladeCenter Extension (zBX) allows integration of IBM POWER7 and System
+x blades.
+
+The zEnterprise continues the mainframe tradition of providing the most
+trusted and resilient platform for large businesses. The extreme
+scalability of zEnterprise can offer significant cost savings on core
+business processes. Freed resources can be used to focus on developing
+new services to drive growth. With the IBM zEnterprise Unified Resource
+Manager, organizations can leverage dynamic and intelligent resource
+management to simplify operations.
+
+A recent study by Rubin Worldwide1 confirms that mainframe "heavy"
+organizations grow more efficiently in supporting business computational
+demands than distributed server "heavy" organizations, demonstrating 39%
+more upward scalability in that they could support revenue growth with
+61% less investment than those that were distributed server "intense".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
