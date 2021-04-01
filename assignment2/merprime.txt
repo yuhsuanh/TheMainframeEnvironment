@@ -1,0 +1,8 @@
+Yu's Mersenne Primes!
+
+3 is a Mersenne prime!
+7 is a Mersenne prime!
+31 is a Mersenne prime!
+127 is a Mersenne prime!
+8191 is a Mersenne prime!
+

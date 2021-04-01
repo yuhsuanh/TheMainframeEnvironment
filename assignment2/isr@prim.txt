@@ -1,0 +1,43 @@
+)ATTR
+ } TYPE(TEXT) COLOR(GREEN)
+ { TYPE(TEXT) COLOR(BLUE)
+ $ TYPE(TEXT) COLOR(YELLOW)
+ ~ TYPE(TEXT) COLOR(TURQ)
+  TYPE(TEXT) COLOR(RED)
+ @ TYPE(OUTPUT) COLOR(PINK)
+ ! TYPE(OUTPUT) COLOR(YELLOW)
+ # TYPE(OUTPUT) COLOR(TURQ)
+ ^ TYPE(INPUT) COLOR(GREEN) CAPS(ON)
+ _ TYPE(INPUT) COLOR(YELLOW) HILITE(USCORE) CAPS(ON)
+)BODY
+%-----------------------~ The Mainframe Environment %--------------------------
+%  { Assignment 2 - Main Menu.
+%
+%Option  ===>_ZCMD
++
+%
+%                     ******************
+%                     *               *
+%                     * $2  %Edit     *
+%                     * $3  %Utility  *
+%                     * $6  %Command  *
+%                     * $SD %SDSF     *
+%                     * $D  %Datasets *
+%                     * $R  %REXX     *
+                       * $X  %eXit      *
+%                     *               *
+%                     ******************
+)PROC
+  &ZSEL = TRANS ( TRUNC (&ZCMD,'.')
+                2,'PGM(ISREDIT) PARM(P,ISREDM01) SCRNAME(EDIT)'
+                3,'PANEL(ISRUTIL) SCRNAME(UTIL)'
+                D,'PGM(ISRUDL) PARM(ISRUDLP) SCRNAME(DSLIST)'
+                6,'PGM(ISRPTC) SCRNAME(CMD)'
+                SD,'PGM(ISFISP) NOCHECK NEWAPPL(ISF) SCRNAME(SDSF)'
+                R,'CMD(REXXSYSC) LANG(CREX) MODE(LINE)'
+              ' ',' '
+                X,'EXIT'
+                *,'?' )
+  &NEXTOPT = .TRAIL
+)END
+

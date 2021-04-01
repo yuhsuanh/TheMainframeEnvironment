@@ -1,0 +1,158 @@
+/* Anagrams.java
+   The Mainframe Environment Java Challenge
+
+   This program will read an input member from the MVS file system and
+   determine whether or not the two items (separated by a vertical bar)
+   in each record are anagrams, that is the letters found in the first
+   can be rearranged to produce the second, using each letter exactly
+   once. */
+
+/* Imports */
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import com.ibm.recordio.*;
+import java.util.Arrays;
+
+/* Class Anagram */
+public class Anagram {
+
+/* main method */
+public static void main(String args[]) {
+
+  /* Ensure that one argument was passed in to the program */
+  if (args.length != 1) {
+    System.out.println("  Error: Invoke java Anagram file_path");
+    System.exit(16);
+  }
+
+  /* Save the argument passed in */
+  String path = args[0];
+
+  /* Try to process the file */
+  try {
+
+    /* Declare a few variables to use later */
+    String[] inputsAsStrings;
+    char[][] inputsAsChars = new char[2][40];
+    String outputString;
+    String input = null;
+
+    /* Vertical bar needs escape character. Escape character \ needs
+       an escape character as well. The content of the string is just |
+    */
+    String delimiter = "\\|";
+
+    /* Create an IRecordFile object using the input path */
+    IRecordFile srcFile =
+      RecordFile.getInstanceOf(path);
+
+    /* Declare a character array whose length is the length of a
+       single record in the input file */
+    byte[] buffer = new byte[srcFile.getRecordLength()];
+
+
+    /* Create an IFileInputRecordStream to read from the input file */
+    IFileInputRecordStream in =
+      FileInputRecordStream.getInstanceOf(srcFile);
+
+    /* Read from the member until end-of-file */
+    while (in.read(buffer) != -1) {
+
+      /* Save the entire record as a String object */
+      input = new String(buffer);
+
+      /* Split the input in to two strings, delimited by a vertical
+         bar */
+      inputsAsStrings = input.split(delimiter);
+
+      /* If we didn't find one string, then a vertical bar, then
+         another string, display an error message then move to
+         the next record in the member */
+      if (inputsAsStrings.length != 2) {
+        System.out.println("  Error: Invalid input\n");
+      }
+
+      /* Else two anagram candidates were found */
+      else {
+
+        /* Trim blank space from the beginning and end of each string */
+        inputsAsStrings[0] = inputsAsStrings[0].trim();
+        inputsAsStrings[1] = inputsAsStrings[1].trim();
+
+
+        /* Start the output string by displaying the "original"
+           versions of the strings before mangling them */
+        System.out.print("\"" + inputsAsStrings[0] + "\" and \"" +
+          inputsAsStrings[1] + "\" ");
+
+        /* Process each of the two input strings */
+        for (int i =0; i < inputsAsStrings.length ; i++) {
+          inputsAsStrings[i] = inputsAsStrings[i].toLowerCase();
+
+          /* Use the replaceAll method of the String class to remove
+             all spaces from the input string */
+          inputsAsStrings[i] = inputsAsStrings[i].replaceAll("\\s","");
+          inputsAsStrings[i] = inputsAsStrings[i].replaceAll("'","");
+          inputsAsStrings[i] = inputsAsStrings[i].replaceAll("!","");
+          inputsAsStrings[i] = inputsAsStrings[i].replaceAll("\\.","");
+          inputsAsStrings[i] = inputsAsStrings[i].replaceAll("\\?","");
+          inputsAsStrings[i] = inputsAsStrings[i].replaceAll(",","");
+          inputsAsStrings[i] = inputsAsStrings[i].replaceAll(";","");
+
+          /* Use the toCharArray method of the String class to create
+             a character array representing the string */
+          inputsAsChars[i] = inputsAsStrings[i].toCharArray();
+
+          /* Use the static sort method of the Array class to sort the
+             characters in the array */
+          Arrays.sort(inputsAsChars[i]);
+
+          /* Create a String object from the now-sorted character
+             array */
+          inputsAsStrings[i] = new String(inputsAsChars[i]);
+        }
+
+        /* If the strings are now equal, the original strings were
+           anagrams. Finish the output for this pair */
+        if (inputsAsStrings[0].equals(inputsAsStrings[1]))
+          System.out.println("are Anagrams!");
+
+        /* Else the strings are not equal so the original strings were
+           not anagrams. Finish the output for this pair */
+        else
+          System.out.println("are not Anagrams!");
+
+        /* Print a blank line between output results */
+        System.out.println();
+      }
+    }
+
+    /* Close the input file */
+    in.close();
+
+  } /* End of try block */
+
+  /* Catch an exception if the input argument was a file path but was
+     not found */
+  catch (FileNotFoundException e) {
+    System.out.println("  Error: The file wasn't found");
+    System.exit(8);
+  }
+
+  /* Catch an exception if the input argument was not a file path. This
+     is likely just not formatted properly so prompt the user to enter
+     the data set correctly */
+  catch (IllegalArgumentException e) {
+    System.out.println("  Error: Make sure you start your input data " +
+    "set with \"//\"");
+    System.exit(8);
+  }
+
+  /* Catch any other exception by printing the stack trace */
+  catch (Exception e) {
+    e.printStackTrace();
+    System.exit(8);
+  }
+} /* End of main method */
+} /* End of Anagram */
+

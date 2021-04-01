@@ -1,0 +1,96 @@
+  Space Character
+! Exclamation Point
+" Double Quote
+# Pound Sign
+$ Dollar Sign
+% Per Cent Sign
+& Ampersand
+' Apostrophe
+( Left Parenthesis
+) Right Parenthesis
+* Asterisk
++ Plus Sign
+, Comma
+- Minus Sign
+. Period Full Stop
+/ Forward Slash
+0 Digit
+1 Digit
+2 Digit
+3 Digit
+4 Digit
+5 Digit
+6 Digit
+7 Digit
+8 Digit
+9 Digit
+: Colon
+; Semicolon
+< Less Than
+= Equal Sign
+> Greater Than
+? Question Mark
+@ At Sign
+A Upper-Case
+B Upper-Case
+C Upper-Case
+D Upper-Case
+E Upper-Case
+F Upper-Case
+G Upper-Case
+H Upper-Case
+I Upper-Case
+J Upper-Case
+K Upper-Case
+L Upper-Case
+M Upper-Case
+N Upper-Case
+O Upper-Case
+P Upper-Case
+Q Upper-Case
+R Upper-Case
+S Upper-Case
+T Upper-Case
+U Upper-Case
+V Upper-Case
+W Upper-Case
+X Upper-Case
+Y Upper-Case
+Z Upper-Case
+[ Left Bracket
+\ Back Slash
+] Right Bracket
+^ Carat Symbol
+_ Underscore
+` Back Apostrophe
+a Lower-Case
+b Lower-Case
+c Lower-Case
+d Lower-Case
+e Lower-Case
+f Lower-Case
+g Lower-Case
+h Lower-Case
+i Lower-Case
+j Lower-Case
+k Lower-Case
+l Lower-Case
+m Lower-Case
+n Lower-Case
+o Lower-Case
+p Lower-Case
+q Lower-Case
+r Lower-Case
+s Lower-Case
+t Lower-Case
+u Lower-Case
+v Lower-Case
+w Lower-Case
+x Lower-Case
+y Lower-Case
+z Lower-Case
+{ Left Brace
+| Vertical Bar
+} Right Brace
+~ Tilde
+

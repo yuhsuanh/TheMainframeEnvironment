@@ -1,0 +1,63 @@
+1                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E  S V S C J E S 2
+0
+ 09.05.45 JOB06806 ---- WEDNESDAY, 31 MAR 2021 ----
+ 09.05.45 JOB06806  IRR010I  USERID KC03CCA  IS ASSIGNED TO THIS JOB.
+ 09.05.45 JOB06806  ICH70001I KC03CCA  LAST ACCESS AT 09:05:35 ON WEDNESDAY, MARCH 31, 2021
+ 09.05.45 JOB06806  $HASP373 CRUNCCA  STARTED - INIT 1    - CLASS A        - SYS 2964
+ 09.05.46 JOB06806  $HASP395 CRUNCCA  ENDED - RC=0000
+0------ JES2 JOB STATISTICS ------
+-  31 MAR 2021 JOB EXECUTION DATE
+-            7 CARDS READ
+-           66 SYSOUT PRINT RECORDS
+-            0 SYSOUT PUNCH RECORDS
+-            7 SYSOUT SPOOL KBYTES
+-         0.00 MINUTES EXECUTION TIME
+         1 //CRUNCCA JOB 1,NOTIFY=&SYSUID                                          JOB06806
+           IEFC653I SUBSTITUTION JCL - 1,NOTIFY=KC03CCA
+         2 //EXECUTE EXEC PGM=LUCKY,PARM=''                                        00020000
+         3 //STEPLIB      DD DSN=&SYSUID..ASSIGN2.LOAD,DISP=SHR                    00030001
+           IEFC653I SUBSTITUTION JCL - DSN=KC03CCA.ASSIGN2.LOAD,DISP=SHR
+         4 //OUTPUT1      DD DSN=&SYSUID..ASSIGN2.OUTPUT(EXAMPLE),                 00050001
+           //             OUTLIM=1000,DISP=SHR                                     00060000
+           IEFC653I SUBSTITUTION JCL - DSN=KC03CCA.ASSIGN2.OUTPUT(EXAMPLE),OUTLIM=1000,DISP=SHR
+         5 //SYSPRINT     DD SYSOUT=*                                              00070000
+           //***************************************************/                  00080000
+ ICH70001I KC03CCA  LAST ACCESS AT 09:05:35 ON WEDNESDAY, MARCH 31, 2021
+ IEFA111I CRUNCCA IS USING THE FOLLOWING JOB RELATED SETTINGS:
+          SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+ IEF236I ALLOC. FOR CRUNCCA EXECUTE
+ IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+ IGD103I SMS ALLOCATED TO DDNAME OUTPUT1
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF142I CRUNCCA EXECUTE - STEP WAS EXECUTED - COND CODE 0000
+ IGD104I KC03CCA.ASSIGN2.LOAD                         RETAINED,  DDNAME=STEPLIB
+ IGD104I KC03CCA.ASSIGN2.OUTPUT                       RETAINED,  DDNAME=OUTPUT1
+ IEF285I   KC03CCA.CRUNCCA.JOB06806.D0000101.?          SYSOUT
+ IEF373I STEP/EXECUTE /START 2021090.0905
+ IEF032I STEP/EXECUTE /STOP  2021090.0905
+         CPU:     0 HR  00 MIN  00.13 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+         VIRT:    64K  SYS:   252K  EXT:      328K  SYS:    12040K
+         ATB- REAL:                  1056K  SLOTS:                     0K
+              VIRT- ALLOC:      13M SHRD:       0M
+ IEF375I  JOB/CRUNCCA /START 2021090.0905
+ IEF033I  JOB/CRUNCCA /STOP  2021090.0905
+         CPU:     0 HR  00 MIN  00.13 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+ YuHsuan's Abundant and Lucky Numbers and Mersenne Primes
+
+ 3 is a Mersenne prime!
+ 7 is a Mersenne prime!
+ 31 is a Mersenne prime!
+ 127 is a Mersenne prime!
+ 1575 is abundantly lucky!
+ 2835 is abundantly lucky!
+ 3465 is abundantly lucky!
+ 4095 is abundantly lucky!
+ 4725 is abundantly lucky!
+ 6435 is abundantly lucky!
+ 7245 is abundantly lucky!
+ 8085 is abundantly lucky!
+ 8191 is a Mersenne prime!
+ 9135 is abundantly lucky!
+ 9555 is abundantly lucky!
+ 12285 is abundantly lucky!
+

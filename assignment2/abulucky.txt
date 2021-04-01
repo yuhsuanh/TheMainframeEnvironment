@@ -1,0 +1,14 @@
+Yu's Abundant and Lucky Numbers
+
+1575 is abundantly lucky!
+2835 is abundantly lucky!
+3465 is abundantly lucky!
+4095 is abundantly lucky!
+4725 is abundantly lucky!
+6435 is abundantly lucky!
+7245 is abundantly lucky!
+8085 is abundantly lucky!
+9135 is abundantly lucky!
+9555 is abundantly lucky!
+12285 is abundantly lucky!
+

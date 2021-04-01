@@ -1,0 +1,38 @@
+)ATTR default("+_)
+ ` type(text) intens(high) color(white)
+ ^ type(text) intens(high) color(green)
+ ~ type(text) intens(high) color(yellow)
+ $ type(text) intens(high) color(turq)
+ # area(scrl) extend(on)
+)BODY expand(||) width(80)
+~=|=|"Interactive Display Commands~|=|=
+"COMMAND ===>_ZCMD
++
+^Select Option:_UserIn %
+#PLEX01 ---------------------------------------------------------------#
++
+~=|=|
++
+)AREA PLEX01 DEPTH(12)
+^   1$D M
+^   2$D IPLINFO
+^   3$D PARMLIB
+^   4$D TS,L
+^   5$D XCF
+^   6$D SMS
+^   7$D SLIP
+^   8$D M=STOR
+^   9$D MMS
+^  10$D M=DEV
+^  11$D WLM
+^  12$D SYMBOLS
++
+)INIT
+ &UserIn = ' '
+ .CURSOR = &UserIn
+)PROC
+ VER (&UserIn,NB,LIST,+
+ 1,2,3,4,5,6,7,8,9,10,11,12)
+ VPUT '(UserIn)' PROFILE
+)END
+

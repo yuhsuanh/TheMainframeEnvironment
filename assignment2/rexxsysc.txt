@@ -1,0 +1,164 @@
+/* REXX
+ |
+ | Name: Display Command Processor
+ |
+ */
+ /* --------------------------------------------------------------- */
+ /* DSN is used by LIBDEFs to define where this exec will run from. */
+ /* --------------------------------------------------------------- */
+   DSN = "'"USERID()".ASSIGN2.REXX'";
+ /* ------------------------------------ */
+ /*  assign panel name to variable       */
+ /* ------------------------------------ */
+   SYSCPAN = 'SYSCPAN';  /* Commands Panel - Scroll Type */
+
+   call initialize_cmds    /* load supported commands into a Stem */
+   call add_libdefs        /* add libdefs - did you update DSN(?) */
+   call plex_information   /* invoke routine                      */
+   call del_libdefs        /* del libdefs - clean up this mess... */
+ exit 00
+
+ /*/\/\_oo_/\/\ /\/\_oo_/\/\ /\/\_oo_/\/\ /\/\_oo_/\/\ /\/\_oo_/\/\*/
+
+plex_information:          /* Display User Selection   */
+ drop sw                   /* unassigns variables      */
+ drop UserIn               /* unassigns variables      */
+ address ISPEXEC "DISPLAY PANEL("SYSCPAN")" /* Show the panel */
+  if rc <> 0 then          /* If the panel won't open, */
+   do                      /* jump ship gracefully     */
+    call del_libdefs;
+    exit 01
+   end
+ address ISPEXEC "VGET (UserIn) PROFILE" /* Wait for UserIn */
+
+ UserIn = strip(cmd.UserIn); /* Strip trailing whitespace */
+
+ call issue_standard_cmds; /* Issue the correct command */
+ call plex_information     /* Recursively call procedure until
+                              user quits application   */
+return                     /* End of plex_information  */
+
+ issue_standard_cmds:
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* free work file going into this routine        */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ address TSO
+  msg_status = MSG("OFF");
+   "FREE FI("wrktmp1")";
+   "FREE ATTRLIST(DCB)";
+  msg_status = MSG("ON");
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* allocate work file                            */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+   "ATTRIB DCB RECFM(F) LRECL(80) BLKSIZE(0)";
+   "ALLOC FILE("wrktmp1") UNIT(SYSDA) SP(5,5) TRACK USING(DCB) NEW"
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Display "UserIn" and Working panel            */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+  function = "===>" UserIn;
+  address ISPEXEC "CONTROL DISPLAY LOCK";
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Turn Console off going into this routine      */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+  address TSO
+  msg_status = MSG("OFF");
+   "console deactivate"
+  msg_status = MSG("ON");
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Construct command                             */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+   Cart_V = 'PLEX1'random(100,)    /* build CART value  */
+   pass_arg. = "CONSOLE SYSCMD("UserIn")  CART("Cart_V")"
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Issue message to Console Services             */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+  address TSO
+  "consprof soldisp(no) solnum(300) unsoldisp(no)"
+  "console activate name("Cart_V") cart("Cart_V")"
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Get Message Results                           */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+  address TSO
+  pass_arg.           /* present command          */
+  getcode = getmsg('issue_back.','SOL',Cart_V,,30)
+  if getcode <> 0 then
+   do
+    say "getmsg error retrieving message.  return code is" getcode
+   end
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Turn Console off going out of this routine    */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+  address TSO
+  msg_status = MSG("OFF");
+   "console deactivate"
+  msg_status = MSG("ON");
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Write message to work file                    */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+  address TSO
+   "EXECIO * DISKW "wrktmp1" (STEM issue_back."
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Close work file                               */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+  address TSO
+   "EXECIO 0 DISKW "wrktmp1" (FINIS";
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Library Services                              */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+   address ISPEXEC "LMINIT  DATAID(LMID) DDNAME("wrktmp1")";
+/* address ISPEXEC "edit  DATAID(&LMID)";      edit rc = 4 */
+   address ISPEXEC "edit DATAID(&LMID)";
+   address ISPEXEC "LMFREE  DATAID(&LMID)";
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* post routine clean-up                         */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+  address TSO
+   drop pass_arg.                       /* unassigns variables      */
+   drop issue_back.                     /* unassigns variables      */
+   msg_status = MSG("OFF");
+   "FREE FI("wrktmp1")";
+   "FREE ATTRLIST(DCB)";
+   msg_status = MSG("ON");
+return
+
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* add libdefs                                   */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ add_libdefs:
+ address TSO
+  x = LISTDSI(dsn)
+  if x <> 0 then do
+   say "Exec SYSPLEX - Could not locate DSN="dsn
+   exit 99
+  end
+ "ALTLIB ACTIVATE APPLICATION(EXEC) DA("dsn")"
+ "ISPEXEC LIBDEF ISPPLIB DATASET    ID("dsn")"
+ return
+
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* del libdefs                                   */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ del_libdefs:
+ address TSO
+ "ALTLIB DEACTIVATE APPLICATION(EXEC) "
+ "ISPEXEC LIBDEF ISPPLIB DATASET"
+ return
+
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ /* Supported Commands - order is same in Panel   */
+ /* - - - - - - - - - - - - - - - - - - - - - - - */
+ initialize_cmds:
+  cmd.1  ='D M'
+  cmd.2  ='D IPLINFO'
+  cmd.3  ='D PARMLIB'
+  cmd.4  ='D TS,L'
+  cmd.5  ='D XCF'
+  cmd.6  ='D SMS'
+  cmd.7  ='D SLIP'
+  cmd.8  ='D M=STOR'
+  cmd.9  ='D MMS'
+  cmd.10 ='D M=DEV'
+  cmd.11 ='D WLM'
+  cmd.12 ='D SYMBOLS'
+ return
+

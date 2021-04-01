@@ -1,0 +1,12 @@
+//CRUNCCA JOB 1,NOTIFY=&SYSUID                                          00010002
+//EXECUTE EXEC PGM=LUCKY,PARM=''                                        00020000
+//STEPLIB      DD DSN=&SYSUID..ASSIGN2.LOAD,DISP=SHR                    00030001
+//OUTPUT1      DD DSN=&SYSUID..ASSIGN2.OUTPUT(EXAMPLE),                 00050001
+//             OUTLIM=1000,DISP=SHR                                     00050108
+//ABULUCKY     DD DSN=&SYSUID..ASSIGN2.WORK(ABULUCKY),                  00051009
+//             OUTLIM=1000,DISP=SHR                                     00051108
+//MERPRIME     DD DSN=&SYSUID..ASSIGN2.WORK(MERPRIME),                  00052009
+//             OUTLIM=1000,DISP=SHR                                     00060000
+//SYSPRINT     DD SYSOUT=*                                              00070000
+//***************************************************/                  00080000
+
