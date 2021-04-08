@@ -1,0 +1,1237 @@
+1                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E
+0
+ 08.37.58 JOB06961 ---- WEDNESDAY, 07 APR 2021 ----
+ 08.37.58 JOB06961  IRR010I  USERID KC03CCA  IS ASSIGNED TO THIS JOB.
+ 08.37.58 JOB06961  IEF677I WARNING MESSAGE(S) FOR JOB KC03CCAD ISSUED
+ 08.37.58 JOB06961  ICH70001I KC03CCA  LAST ACCESS AT 08:37:16 ON WEDNESDAY, APR
+ 08.37.58 JOB06961  $HASP373 KC03CCAD STARTED - INIT 2    - CLASS A        - SYS
+ 08.37.59 JOB06961  $HASP395 KC03CCAD ENDED - RC=0000
+0------ JES2 JOB STATISTICS ------
+-  07 APR 2021 JOB EXECUTION DATE
+-           18 CARDS READ
+-        1,238 SYSOUT PRINT RECORDS
+-            0 SYSOUT PUNCH RECORDS
+-          112 SYSOUT SPOOL KBYTES
+-         0.02 MINUTES EXECUTION TIME
+         1 //KC03CCAD JOB 1,'YUHSUAN',NOTIFY=&SYSUID
+           //*ZSCHOLIB JCLLIB ORDER=(ZPROF.PROCLIB)
+           //**************************************************
+           //* C KC03CCA YOURID ALL
+           //* C ZPROF PROFUID ALL
+           //*   ==> IF YOU USE NOT ZPROF AS INSTRUCTORID
+           //* DELETE ZSCHOLIB STATEMENT IF YOU WANT TO USE
+           //*       THE DEFAULT PROC LIBRARY
+           //**************************************************
+           //* COMPILE ASSEMBLER PROGRAM THAT USES LE
+           //**************************************************
+           IEFC653I SUBSTITUTION JCL - 1,'YUHSUAN',NOTIFY=KC03CCA
+         2 //STEP1 EXEC HLASMCL,PARM.L='MAP,LET,LIST'
+         3 XXASMACL   PROC
+           XX*
+           XX*******************************************************************
+           XX*
+           XX*  Licensed Materials - Property of IBM
+           XX*
+           XX*  5696-234   5694-A01
+           XX*
+           XX*  Copyright IBM Corporation 1992, 2008 All Rights Reserved.
+           XX*
+           XX*  US Government Users Restricted Rights - Use, duplication
+           XX*  or disclosure restricted by GSA ADP Schedule Contract
+           XX*  with IBM Corp.
+           XX*
+           XX*******************************************************************
+           XX*
+           XX*  ASMACL
+           XX*
+           XX*  This procedure runs the High Level Assembler, link-edits the
+           XX*  newly assembled program.
+           XX*
+           XX*******************************************************************
+           XX*
+         4 XXC        EXEC PGM=ASMA90
+           XX*
+         5 //C.SYSLIB     DD DSN=SYS1.MACLIB,DISP=SHR
+           X/SYSLIB   DD  DSN=SYS1.MACLIB,DISP=SHR
+         6 //             DD DSN=CEE.SCEEMAC,DISP=SHR
+         7 XXSYSUT1   DD  DSN=&&SYSUT1,SPACE=(16384,(120,120),,,ROUND),
+           XX             UNIT=SYSALLDA,BUFNO=1
+         8 XXSYSPRINT DD  SYSOUT=*
+         9 XXSYSLIN   DD  DSN=&&OBJ,SPACE=(3040,(40,40),,,ROUND),
+           XX             UNIT=SYSALLDA,DISP=(MOD,PASS),
+           XX             BLKSIZE=3040,LRECL=80,RECFM=FB,BUFNO=1
+           XX*
+        10 //C.SYSIN      DD DSN=KC03CCA.LANG.SOURCE(ASMLE),DISP=SHR
+        11 XXL        EXEC PGM=HEWL,PARM='MAP,LET,LIST,NCAL',COND=(8,LT,C)
+           XX*
+        12 XXSYSLIN   DD  DSN=&&OBJ,DISP=(OLD,DELETE)
+        13 XX         DD  DDNAME=SYSIN
+        14 //L.SYSLMOD    DD DSN=KC03CCA.LANG.LOAD(ASMLE),DISP=SHR
+           X/SYSLMOD  DD  DISP=(,PASS),UNIT=SYSALLDA,SPACE=(CYL,(1,1,1)),
+           X/             DSN=&&GOSET(GO)
+        15 XXSYSUT1   DD  DSN=&&SYSUT1,SPACE=(1024,(120,120),,,ROUND),
+           XX             UNIT=SYSALLDA,BUFNO=1
+        16 XXSYSPRINT DD  SYSOUT=*
+           XX*
+        17 //L.SYSLIB     DD DSN=CEE.SCEELKED,DISP=SHR
+        18 //             DD DSN=CEE.SCEELKEX,DISP=SHR
+  STMT NO. MESSAGE
+         2 IEFC001I PROCEDURE HLASMCL WAS EXPANDED USING SYSTEM LIBRARY SYS1.PRO
+        18 IEF686I DDNAME REFERRED TO ON DDNAME KEYWORD IN PRIOR STEP WAS NOT RE
+ ICH70001I KC03CCA  LAST ACCESS AT 08:37:16 ON WEDNESDAY, APRIL 7, 2021
+ IEFA111I KC03CCAD IS USING THE FOLLOWING JOB RELATED SETTINGS:
+          SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+ IEF236I ALLOC. FOR KC03CCAD C STEP1
+ IEF237I 1001 ALLOCATED TO SYSLIB
+ IEF237I 1001 ALLOCATED TO
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT1  )
+         DSN (SYS21097.T083758.RA000.KC03CCAD.SYSUT1.H01  )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IGD101I SMS ALLOCATED TO DDNAME (SYSLIN  )
+         DSN (SYS21097.T083758.RA000.KC03CCAD.OBJ.H01     )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD103I SMS ALLOCATED TO DDNAME SYSIN
+ IEF142I KC03CCAD C STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IEF285I   SYS1.MACLIB                                  KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IEF285I   CEE.SCEEMAC                                  KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IGD105I SYS21097.T083758.RA000.KC03CCAD.SYSUT1.H01   DELETED,   DDNAME=SYSUT1
+ IEF285I   KC03CCA.KC03CCAD.JOB06961.D0000101.?         SYSOUT
+ IGD106I SYS21097.T083758.RA000.KC03CCAD.OBJ.H01      PASSED,    DDNAME=SYSLIN
+ IGD104I KC03CCA.LANG.SOURCE                          RETAINED,  DDNAME=SYSIN
+ IEF373I STEP/C       /START 2021097.0837
+ IEF032I STEP/C       /STOP  2021097.0837
+         CPU:     0 HR  00 MIN  00.01 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+         VIRT:   248K  SYS:   256K  EXT:    32768K  SYS:    12608K
+         ATB- REAL:                  3252K  SLOTS:                     0K
+              VIRT- ALLOC:      20M SHRD:       0M
+ IEF236I ALLOC. FOR KC03CCAD L STEP1
+ IGD103I SMS ALLOCATED TO DDNAME SYSLIN
+ IEF237I DMY  ALLOCATED TO
+ IGD103I SMS ALLOCATED TO DDNAME SYSLMOD
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT1  )
+         DSN (SYS21097.T083758.RA000.KC03CCAD.SYSUT1.H01  )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF237I 1001 ALLOCATED TO SYSLIB
+ IEF237I 1001 ALLOCATED TO
+ IEF142I KC03CCAD L STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD105I SYS21097.T083758.RA000.KC03CCAD.OBJ.H01      DELETED,   DDNAME=SYSLIN
+ IGD104I KC03CCA.LANG.LOAD                            RETAINED,  DDNAME=SYSLMOD
+ IGD105I SYS21097.T083758.RA000.KC03CCAD.SYSUT1.H01   DELETED,   DDNAME=SYSUT1
+ IEF285I   KC03CCA.KC03CCAD.JOB06961.D0000102.?         SYSOUT
+ IEF285I   CEE.SCEELKED                                 KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IEF285I   CEE.SCEELKEX                                 KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IEF373I STEP/L       /START 2021097.0837
+ IEF032I STEP/L       /STOP  2021097.0837
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+         VIRT:   100K  SYS:   264K  EXT:     1768K  SYS:    12576K
+         ATB- REAL:                  3240K  SLOTS:                     0K
+              VIRT- ALLOC:      17M SHRD:       0M
+ IEF375I  JOB/KC03CCAD/START 2021097.0837
+ IEF033I  JOB/KC03CCAD/STOP  2021097.0837
+         CPU:     0 HR  00 MIN  00.01 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+1                                         High Level Assembler Option Summary
+-
+0  No Overriding ASMAOPT Parameters
+   No Overriding Parameters
+   No Process Statements
+
+
+   Options for this Assembly
+0                    NOADATA
+                       ALIGN
+                     NOASA
+                       BATCH
+                       CODEPAGE(047C)
+                     NOCOMPAT
+                     NODATAMAP
+                     NODBCS
+                     NODECK
+                       DXREF
+                       ESD
+                     NOEXIT
+                       FAIL(NOMSG,NOMNOTE,MAXERRS(500))
+                       FLAG(0,ALIGN,CONT,EXLITW,NOIMPLEN,NOLONGER,NOPAGE0,PUSH,R
+                     NOFOLD
+                     NOGOFF
+                     NOINFO
+                       ILMA
+                       LANGUAGE(EN)
+                     NOLIBMAC
+                       LINECOUNT(60)
+                       LIST(121)
+                       MACHINE(,NOLIST)
+                       MXREF(SOURCE)
+                       OBJECT
+                       OPTABLE(UNI,NOLIST)
+                     NOPCONTROL
+                     NOPESTOP
+                     NOPROFILE
+                     NORA2
+                     NORENT
+                       RLD
+                       RXREF
+                       SECTALGN(8)
+                       SIZE(MAX)
+                     NOSUPRWARN
+                       SYSPARM()
+                     NOTERM
+                     NOTEST
+                       THREAD
+                     NOTRANSLATE
+                       TYPECHECK(MAGNITUDE,REGISTER)
+                       USING(NOLIMIT,MAP,WARN(15))
+                     NOWORKFILE
+                       XREF(SHORT,UNREFS)
+
+   No Overriding DD Names
+1                                              External Symbol Dictionary
+-Symbol   Type   Id     Address  Length   Owner Id Flags Alias-of
+0MAIN      SD 00000001 00000000 00000150             07
+ CEEINT    ER 00000002
+ CEEMAIN   SD 00000003 00000150 00000008             07
+ CEESTART  ER 00000004
+ CEEBETBL  ER 00000005
+ CEEMOUT   ER 00000006
+ CEETREC   ER 00000007
+1
+   Active Usings: None
+0  Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                                      1 * =====================================
+                                       2 *
+                                       3 * SHOWS A SIMPLE MAIN ASSEMBLER ROUTINE
+                                       4 * RETURNS WITH A RETURN CODE OF 0, MODI
+                                       5 * MESSAGE IN THE MAIN ROUTINE.
+                                       6 *
+                                       7 * =====================================
+                                       8 MAIN     CEEENTRY PPA=MAINPPA
+ 000000                00000 00150     9+MAIN    CSECT ,
+                                      10+MAIN    RMODE ANY
+                                      11+MAIN    AMODE ANY
+                                      12+           ENTRY MAIN
+                                      13+         PUSH  USING
+                                      14+         DROP  ,
+                  R:F  00000          15+         USING *,15
+ 000000 47F0 F014            00014    16+         B     CEEZ0001
+ 000004 00C3C5C5                      17+         DC    X'00C3C5C5'
+                       00080          18+CEEY0001    EQU ((CEEDSASZ+7)/8)*8
+                                        +                                  . Siz
+ 000008 00000080                      19+         DC    A(CEEY0001)        . Siz
+ 00000C 000000D0                      20+         DC    A(MAINPPA-MAIN)    . Add
+ 000010 47F0 F001            00001    21+         B     1(,15)
+                       00014          22+CEEZ0001    EQU *
+ 000014 90EC D00C            0000C    23+         STM   14,12,CEEDSAR14-CEEDSA(1
+ 000018 5820 F050            00050    24+         L     2,CEEINPL0001        R2=
+ 00001C 58F0 F054            00054    25+         L     15,CEEINT0001        R15
+                                      26+         DROP  15
+ 000020 05EF                          27+         BALR  14,15                Cal
+ 000022 1821                          28+         LR    2,1                  Sav
+ 000024 58E0 C2F0            002F0    29+         L     14,752(,12)          Get
+ 000028 9680 E008      00008          30+         OI    8(14),X'80'          Tur
+ 00002C 5810 D04C            0004C    31+         L     1,CEEDSANAB-CEEDSA(,13)
+ 000030 A502 0000                     32+         IILH  0,CEEY0001/65536
+ 000034 A503 0080                     33+         IILL  0,CEEY0001-(CEEY0001/655
+ 000038 1E01                          34+         ALR   0,1
+ 00003A 5500 C00C            0000C    35+         CL    0,CEECAAEOS-CEECAA(,12)
+ 00003E A7D4 000D            00058    36+         JNH   CEEX0001
+ 000042 58F0 C2BC            002BC    37+         L     15,CEECAAGETS-CEECAA(,12
+ 000046 05EF                          38+         BALR  14,15
+ 000048 181F                          39+         LR    1,15
+ 00004A A7F4 0007            00058    40+         J     CEEX0001
+ 00004E 0000
+ 000050 000000F8                      41+CEEINPL0001    DC    A(CEEINPL)
+ 000054 00000000                      42+CEEINT0001     DC    V(CEEINT)
+                       00058          43+CEEX0001    EQU *
+ 000058 50D0 1004            00004    44+         ST    13,CEEDSABKC-CEEDSA(,1)
+ 00005C 5000 104C            0004C    45+         ST    0,CEEDSANAB-CEEDSA(,1)
+ 000060 D701 1000 1000 00000 00000    46+         XC    CEEDSAFLAGS-CEEDSA(,1),C
+ 000066 5010 D008            00008    47+         ST    1,CEEDSAFWC-CEEDSA(,13)
+ 00006A 18D1                          48+         LR    13,1
+                                      49+         POP   USING
+                  R:D  00000          50+         USING CEEDSA,13
+ 00006C D203 D048 C280 00048 00280    51+         MVC   CEEDSALWS,CEECAALWS-CEEC
+ 000072 1812                          52+         LR    1,2
+ 000074 C0B0 FFFF FFC6       00000    53+         LARL  11,MAIN
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0  Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                 R:B  00000          54+         USING MAIN,11
+                                      55 *
+                                      56 *
+ 00007A 4110 B0A0            000A0    57          LA       1,PARMLIST
+ 00007E 58F0 B148            00148    58          L        15,=V(CEEMOUT)
+ 000082 05EF                          59          BALR     14,15
+                                      60 *
+                                      61 *   TERMINATE THE LANGUAGE ENVIRONMENT
+                                      62 *   CALLER
+                                      63 *
+                                      64          CEETERM  RC=0,MODIFIER=0
+ 000084 4110 B090            00090    65+         LA   1,CEET0002
+ 000088 58F0 B14C            0014C    66+         L    15,=V(CEETREC)
+ 00008C 05EF                          67+         BALR 14,15
+ 00008E 0000
+ 000090 00000098                      68+CEET0002 DC   A(*+8)               Parm
+ 000094 8000009C                      69+         DC   A(*+8+X'80000000')   Parm
+ 000098 00000000                      70+         DC   A(0)                 Enc_
+ 00009C 00000000                      71+         DC   A(0)                 Retu
+ 000150                00150 00008    72+CEEMAIN  CSECT
+                                      73+CEEMAIN  RMODE ANY
+                                      74+CEEMAIN  AMODE ANY
+ 000150 00000000                      75+         DC    A(MAIN)
+ 000154 00000000                      76+         DC    F'0'
+ 0000A0                00000 00150    77+MAIN       CSECT
+                                      78 * =====================================
+                                      79 *              CONSTANTS AND WORKAREAS
+                                      80 * =====================================
+ 0000A0 000000AC                      81 PARMLIST DC    AL4(STRING)
+ 0000A4 000000CC                      82          DC    AL4(DEST)
+ 0000A8 80000000                      83          DC    X'80000000'        OMITT
+                                      84 *
+ 0000AC 001C                          85 STRING   DC    AL2(STRLEN)
+ 0000AE C8C940C7C5D6D9C7              86 STRBEGIN DC    CL28'HI GEORGIAN COLLEGE
+                       0001C          87 STRLEN   EQU   *-STRBEGIN
+ 0000CA 0000
+ 0000CC 00000002                      88 DEST     DC    F'2'
+                                      89 MAINPPA  CEEPPA                   CONST
+                                      90+*/*************************************
+                                      91+*/*
+                                      92+*/* Licensed Materials - Property of IB
+                                      93+*/*
+                                      94+*/* 5650-ZOS 5688-198
+                                      95+*/*
+                                      96+*/* Copyright IBM Corp. 1991, 2017
+                                      97+*/*
+                                      98+*/* Status = HLE77B0
+                                      99+*/*
+                                     100+*/*************************************
+                                     101+*
+                                     102+***************************************
+                                     103+*        P R O G R A M  P R O L O G  A
+                                     104+***************************************
+                                     105+*
+ 0000D0                              106+PPA10003    DS    0F
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0  Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+00000D0                              107+MAINPPA  DS    0F
+ 0000D0 20                           108+         DC    AL1(PPANL0003-*) Offset
+ 0000D1 CE                           109+         DC    X'CE'            LE/370
+ 0000D2 A0                           110+         DC    B'10100000'
+                                     111+*
+                                     112+*                     Bit 0   0 = Inter
+                                     113+*                             1 = Exter
+                                     114+*                     Bit 1   0 = Prima
+                                     115+*                             1 = Secon
+                                     116+*                     Bit 2   0 = Block
+                                     117+*                             1 = Block
+                                     118+*                     Bit 3   0 = compi
+                                     119+*                             1 = libra
+                                     120+*                     Bit 4   0 = sampl
+                                     121+*                             1 = sampl
+                                     122+*                     Bit 5   0 = not a
+                                     123+*                             1 = Exit
+                                     124+*                     Bit 6   0 = own e
+                                     125+*                             1 = inher
+                                     126+*                     Bit 7       Reser
+ 0000D3 00                           127+         DC    X'00'            Member
+ 0000D4 00000120                     128+         DC    A(PPA20003)      Addr of
+ 0000D8 00000000                     129+         DC    A(0)             Blk Deb
+ 0000DC 00000000                     130+         DC    A(0)             Data De
+ 0000E0 00000000                     131+         DC    A(0)             GPR sav
+ 0000E4 00000000                     132+         DC    A(0)             Member
+ 0000E8 00000000                     133+         DC    A(0)
+                                     134+* Language Environment flags (16bits)
+ 0000EC 00                           135+         DC    B'00000000'
+                                     136+*                 Bit 0-1 00 = Old code
+                                     137+*                         01 = Old code
+                                     138+*                         10 = Old code
+                                     139+*                 Bit 2   0  = Allow as
+                                     140+*                         1  = Defer as
+                                     141+*                 Bit 3   0  = Word 0 o
+                                     142+*                         1  = Word 0 o
+                                     143+*                 Bit 4   0  = Code is
+                                     144+*                         1  = Code is
+                                     145+*                 Bit 5   0  = Real ret
+                                     146+*                              offset '
+                                     147+*                         1  = Real ret
+                                     148+*                              area
+                                     149+*                 Bit 6   0  = Storage
+                                     150+*                              indeterm
+                                     151+*                         1  = Storage
+                                     152+*                 Bit 7   0  = R12 must
+                                     153+*                              old code
+                                     154+*                         1  = R12 not
+ 0000ED 00                           155+         DC    B'00000000'
+                                     156+*                 Bit 8   0  = Not vara
+                                     157+*                         1  = Vararg r
+                                     158+*                 Bit 9   0  = Asynchro
+                                     159+*                         1  = Asynchro
+                                     160+*                 Bit 10  0  = No modul
+                                     161+*                         1  = Module s
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0  Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                                    162+*                 Bit 11-13  = Reserved
+                                     163+*                 Bit 14  0  = extended
+                                     164+*                         1  = extended
+                                     165+*                 Bit 15     = Reserved
+ 0000EE 0000                         166+         DC    AL2(0)           Offset/
+ 0000F0                              167+         DS    0H
+ 0000F0 0004                         168+PPANL0003 DC   AL2(4)        .  Length
+ 0000F2 D4C1C9D5                     169+         DC    CL4'MAIN'     .  Entry P
+ 0000F8                              170+CEEINPL  DS    0D
+ 0000F8 0000011C                     171+         DC    A(INPLEPA)  . A of A(fir
+ 0000FC 00000008                     172+         DC    A(CEEINPLSTST-CEEINPL)
+ 000100                              173+CEEINPLSTST DS 0F
+ 000100 00                           174+         DC    X'00'            Control
+ 000101 00                           175+         DC    X'00'            ENCLAVE
+ 000102 00                           176+         DC    X'00'
+ 000103 07                           177+         DC    X'07'            Number
+ 000104 0000011C                     178+         DC    A(INPLEPA)  . A of A(fir
+ 000108 00000000                     179+         DC    V(CEESTART)   . A(Addres
+ 00010C 00000000                     180+         DC    V(CEEBETBL)
+ 000110 0000000F                     181+         DC    A(15)         . Memeber
+ 000114 00000000                     182+         DC    A(0)
+ 000118 00020000                     183+         DC    XL4'00020000'          .
+ 00011C 00000000                     184+INPLEPA  DC    A(MAIN)        . A(first
+ 000120                              185+         DS    0H
+                                     186+*
+                                     187+***************************************
+                                     188+*        P R O G R A M  P R O L O G  A
+                                     189+***************************************
+                                     190+*
+                                     191+         EXTRN CEESTART
+ 000120                              192+PPA20003    DS    0F
+ 000120 0F                           193+         DC    AL1(15)          Member
+ 000121 00                           194+         DC    AL1(0)           Sub ID
+ 000122 00                           195+         DC    AL1(0)           Member
+ 000123 01                           196+         DC    AL1(1)           Level o
+ 000124 00000000                     197+PPA2S0003   DC    A(CEESTART)      A(CE
+ 000128 00000000                     198+         DC    A(0)             A(Compi
+ 00012C 00000014                     199+         DC    A(CEETIMES-PPA20003)   A
+ 000130 00000000                     200+PPA2M0003   DC    A(MAIN)        . A(fi
+                                     201+*
+                                     202+***************************************
+                                     203+*                 T I M E    S T A M P
+                                     204+***************************************
+                                     205+*
+                                     206+*        Time Stamp
+                                     207+*,Time Stamp = 2021/04/07 08:37:00
+                                     208+*,Version 1 Release 1 Modification 0
+ 000134                              209+CEETIMES DS    0F
+ 000134 F2F0F2F1                     210+         DC    CL4'2021'          Year
+ 000138 F0F4                         211+         DC    CL2'04'            Month
+ 00013A F0F7                         212+         DC    CL2'07'            Day
+ 00013C F0F8                         213+         DC    CL2'08'            Hours
+ 00013E F3F7                         214+         DC    CL2'37'            Minut
+ 000140 F0F0                         215+         DC    CL2'00'            Secon
+ 000142 F140                         216+         DC    CL2'1'             Versi
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0  Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0000144 F140                         217+         DC    CL2'1'             Relea
+ 000146 F040                         218+         DC    CL2'0'             Modif
+                                     219          CEEDSA                   MAPPI
+                                     220+*
+                                     221+***************************************
+                                     222+*   D Y N A M I C   S T O R A G E   A R
+                                     223+***************************************
+                                     224+*
+ 000000                00000 00080   225+CEEDSA   DSECT 0D         Default DSECT
+                                     226+*
+ 000000                              227+CEEDSAFLAGS DS XL2                  DSA
+                       01000         228+CEEDSALNGC EQU X'1000'                C
+                       00800         229+CEEDSALNGP EQU X'0800'                P
+                       00008         230+CEEDSAEXIT EQU X'0008'                A
+ 000002                              231+CEEDSAMEMD DS  XL2                  Mem
+ 000004                              232+CEEDSABKC DS   A                    Add
+ 000008                              233+CEEDSAFWC DS   A                    Add
+ 00000C                              234+CEEDSAR14 DS   F                    Sav
+ 000010                              235+CEEDSAR15 DS   F                    Sav
+ 000014                              236+CEEDSAR0 DS    F                    Sav
+ 000018                              237+CEEDSAR1 DS    F                    Sav
+ 00001C                              238+CEEDSAR2 DS    F                    Sav
+ 000020                              239+CEEDSAR3 DS    F                    Sav
+ 000024                              240+CEEDSAR4 DS    F                    Sav
+ 000028                              241+CEEDSAR5 DS    F                    Sav
+ 00002C                              242+CEEDSAR6 DS    F                    Sav
+ 000030                              243+CEEDSAR7 DS    F                    Sav
+ 000034                              244+CEEDSAR8 DS    F                    Sav
+ 000038                              245+CEEDSAR9 DS    F                    Sav
+ 00003C                              246+CEEDSAR10 DS   F                    Sav
+ 000040                              247+CEEDSAR11 DS   F                    Sav
+ 000044                              248+CEEDSAR12 DS   F                    Sav
+ 000048                              249+CEEDSALWS DS   A                    Add
+ 00004C                              250+CEEDSANAB DS   A                    Add
+ 000050                              251+CEEDSAPNAB DS  A                    Add
+ 000054                              252+           DS  4F
+ 000064                              253+CEEDSATRAN DS  0A                   HPL
+ 000064                              254+CEEDSARENT DS  A                    Pro
+ 000068                              255+CEEDSACILC DS  A                    C t
+ 00006C                              256+CEEDSAMODE DS  A                    Ret
+                                     257+*                                   cau
+ 000070                              258+           DS  2F
+ 000078                              259+CEEDSARMR  DS  A                    Add
+                                     260+*                                   exc
+                                     261+*
+ 00007C                              262+           DS  F                    Res
+ 000080                              263+CEEDSAAUTO DS  0D                   Aut
+ 000080                              264+CEEDSAEND  DS  0D                   End
+                       00080         265+CEEDSASZ EQU   CEEDSAEND-CEEDSA     Siz
+                       00000         266+CEEDSA_STDCEEDSA  EQU   X'0000'     fla
+                                     267+*
+                                     268+*
+                                     269+*
+                                     270+*
+                                     271+***************************************
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0D-Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                                    272+*   X P L I N K   D Y N A M I C   S T O
+                                     273+***************************************
+                                     274+*
+ 000000                00000 00840   275+CEEDSAHP DSECT 0D         Default DSECT
+                                     277+***************************************
+                                     278+***************************************
+                       00004         279+LEPTRLEN EQU    4
+                                     280+*
+ 000000                              281+CEEDSAHP_BIAS  DS XL2048             BI
+                       00800         282+CEEDSAHPBIASSZ EQU *-CEEDSAHP_BIAS   Si
+ 000800                              283+CEEDSAHP_FIXED DS 0X                 St
+ 000800                              284+CEEDSAHP4TO15 DS 12F                 Sa
+ 000830                00830 00800   285+            ORG CEEDSAHP_FIXED
+ 000800                              286+CEEDSAHP4TO7  DS 4F                  Sa
+ 000810                00810 00800   287+            ORG CEEDSAHP_FIXED
+ 000800                              288+CEEDSAHPR4  DS F                     Sa
+ 000804                              289+CEEDSAHPR5  DS F                     Sa
+ 000808                              290+CEEDSAHPR6  DS F                     Sa
+ 00080C                              291+CEEDSAHPR7  DS F                     Sa
+ 000810                              292+CEEDSAHP8TO15 DS 8F                  Sa
+ 000830                00830 00810   293+            ORG CEEDSAHP8TO15
+ 000810                              294+CEEDSAHPR8  DS F                     Sa
+ 000814                              295+CEEDSAHPR9  DS F                     Sa
+ 000818                              296+CEEDSAHPR10 DS F                     Sa
+ 00081C                              297+CEEDSAHPR11 DS F                     Sa
+ 000820                              298+CEEDSAHPR12 DS F                     Sa
+ 000824                              299+CEEDSAHPR13 DS F                     Sa
+ 000828                              300+CEEDSAHPR14 DS F                     Sa
+ 00082C                              301+CEEDSAHPR15 DS F                     Sa
+ 000830                              302+            DS F                     Re
+ 000834                              303+CEEDSAHPMBRUSE DS F                  Re
+ 000838                              304+CEEDSAHPTRAN DS A                    Ad
+ 00083C                              305+CEEDSAHP_ARG_PRE DS 0A               Ar
+ 00083C                              306+CEEDSAHPRENT     DS A                or
+                       00040         307+CEEDSAHPSZ  EQU *-CEEDSAHP_FIXED     Si
+ 000840                              308+CEEDSAHP_ARGLIST DS 0X               St
+                                     309+*
+                                     310+*
+ 000080                00000 00080   311+CEEDSA   DSECT  ,
+                                     312          CEECAA                   MAPPI
+                                     313+***************************************
+                                     314+*  C O M M O N   A N C H O R   A R E A
+                                     315+***************************************
+                                     316+*
+                                     318+***************************************
+                                     319+***************************************
+                                     320+*
+ 000000                00000 00400   321+CEECAA   DSECT    ,                 CAA
+ 000000                              322+CEECAAFLAG0 DS    X                 CAA
+                       00002         323+CEECAAXHDL  EQU   X'02'              By
+                                     324+*           EQU   X'FD'              Re
+ 000001                              325+            DS    X                 Res
+                       00020         326+CEECAADBGINIT EQU X'20'              De
+ 000002                              327+CEECAALANGP DS    X                 PL/
+                       00008         328+CEECAATHFN  EQU   X'08'              If
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0D-Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                                    329+*                                    on
+                                     330+*           EQU   X'F7'               R
+ 000003                              331+            DS    XL5               Res
+ 000008                              332+CEECAABOS   DS    A                 Sta
+ 00000C                              333+CEECAAEOS   DS    A                 End
+ 000010                              334+            DS    XL52              Res
+ 000044                              335+CEECAATORC  DS    F                 Thr
+ 000048                              336+            DS    XL44              Res
+ 000074                              337+CEECAATOVF  DS    A                 Sta
+ 000078                              338+            DS    XL168             Res
+ 000120                              339+CEECAAATTN  DS    A                 Add
+                                     340+*
+ 000124                              341+            DS    XL56              Res
+ 00015C                              342+CEECAAHLLEXIT DS  A                 Set
+ 000160                              343+            DS    XL56              Res
+ 000198                              344+CEECAAHOOK  DS    XL12              Cod
+ 0001A4                              345+CEECAADIMA  DS    A                 A(d
+                                     346+*
+ 0001A8                              347+CEECAAHOOKS DS    0CL68             Hoo
+ 0001A8                              348+CEECAAALLOC DS    XL4               ALL
+ 0001AC                              349+CEECAASTATE DS    XL4               New
+ 0001B0                              350+CEECAAENTRY DS    XL4               Blo
+ 0001B4                              351+CEECAAEXIT  DS    XL4               Blo
+ 0001B8                              352+CEECAAMEXIT DS    XL4               Mul
+ 0001BC                              353+CEECAAPATHS DS    0CL32             PAT
+ 0001BC                              354+CEECAALABEL DS    XL4               At
+ 0001C0                              355+CEECAABCALL DS    XL4               Bef
+ 0001C4                              356+CEECAAACALL DS    XL4               Aft
+ 0001C8                              357+CEECAADO    DS    XL4               DO
+ 0001CC                              358+CEECAAIFTRUE  DS   XL4              Tru
+ 0001D0                              359+CEECAAIFFALSE DS   XL4              Fal
+ 0001D4                              360+CEECAAWHEN    DS   XL4              WHE
+ 0001D8                              361+CEECAAOTHER   DS   XL4              OTH
+ 0001DC                              362+CEECAACGOTO   DS   XL4              GOT
+ 0001E0                              363+CEECAARSVDH1  DS   XL4              Res
+ 0001E4                              364+CEECAARSVDH2  DS   XL4              Res
+ 0001E8                              365+CEECAAMULTEVT DS   XL4              Mul
+                                     366+*
+ 0001EC                              367+CEECAAMEVMASK DS   XL4              Mul
+ 0001F0                              368+CEECAACGENE DS    A                 Res
+ 0001F4                              369+CEECAACRENT DS    A                 C/3
+ 0001F8                              370+CEECAACFLTINIT DS XL8               Use
+ 000200                              371+CEECAACPRMS DS    A                 Par
+ 000204                              372+CEECAAC_RTL          DS   0F        Com
+                                     373+*                                   trc
+ 000204                              374+CEECAAC_RTL_1        DS    X        C/3
+                                     375+*
+ 000205                              376+CEECAAC_RTL_2        DS    X        C/3
+                                     377+*
+ 000206                              378+CEECAAC_RTL_3        DS    X        C/3
+                                     379+*                    EQU   X'80'    Res
+                       00040         380+CEECAA_SIGNALS_L     EQU   X'40'    Low
+                       00020         381+CEECAA_LOW_IO        EQU   X'20'    Low
+                       00010         382+CEECAA_INITTERM_L    EQU   X'10'    Low
+                                     383+*                    EQU   X'08'    Res
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0D-Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                      00004         384+CEECAA_SIGNALS_H     EQU   X'04'    Hig
+                       00002         385+CEECAA_HIGH_IO       EQU   X'02'    Hig
+                       00001         386+CEECAA_INITTERM_H    EQU   X'01'    Hig
+                                     387+*
+ 000207                              388+CEECAAC_COMTRACE     DS    X        Com
+                                     389+*                    EQU   X'80'    Res
+                                     390+*                    EQU   X'40'    Res
+                       00020         391+CEECAA_RTLXPLI       EQU   X'20'    RTL
+                       00010         392+CEECAA_RTLCICS       EQU   X'10'    RTL
+                       00008         393+CEECAA_RTLALLOC      EQU   X'08'    RTL
+                       00004         394+CEECAA_RTLCOUNT      EQU   X'04'    RTL
+                       00002         395+CEECAA_RTLLOCKS      EQU   X'02'    RTL
+                       00001         396+CEECAA_RTLFUNC       EQU   X'01'    RTL
+                                     397+*
+ 000208                              398+CEECAACTHD  DS    A
+ 00020C                              399+CEECAACURRFECB DS A
+ 000210                              400+CEECAAEDCV  DS    A                 C/3
+ 000214                              401+CEECAACPCB  DS    A
+ 000218                              402+CEECAACEDB  DS    A                 C/3
+ 00021C                              403+            DS    XL3
+ 00021F                              404+CEECAASPCFLAG3 DS X
+ 000220                              405+CEECAACIO   DS    A                 Add
+ 000224                              406+CEECAAFDSETFD DS  F                 Use
+ 000228                              407+CEECAAFCBMUTEXOK DS XL2
+ 00022A                              408+            DS    XL2
+ 00022C                              409+CEECAATC16  DS    F
+ 000230                              410+CEECAATC17  DS    F
+ 000234                              411+CEECAAEDCOV DS    A                 C/3
+ 000238                              412+CEECAACTOFSV DS   F
+ 00023C                              413+CEECAATRTSPACE DS A                 C/3
+ 000240                              414+            DS    XL24
+ 000258                              415+CEECAA_TCASRV DS  0CL36             TCA
+ 000258                              416+CEECAA_TCASRV_USERWORD  DS A
+ 00025C                              417+CEECAA_TCASRV_WORKAREA  DS A
+ 000260                              418+CEECAA_TCASRV_GETMAIN   DS A
+ 000264                              419+CEECAA_TCASRV_FREEMAIN  DS A
+ 000268                              420+CEECAA_TCASRV_LOAD      DS A
+ 00026C                              421+CEECAA_TCASRV_DELETE    DS A
+ 000270                              422+CEECAA_TCASRV_EXCEPTION DS A
+ 000274                              423+CEECAA_TCASRV_ATTENTION DS A
+ 000278                              424+CEECAA_TCASRV_MESSAGE   DS A
+ 00027C                              425+            DS    XL4               Res
+ 000280                              426+CEECAALWS   DS    A                 Add
+ 000284                              427+CEECAASAVR  DS    A                 Reg
+ 000288                              428+            DS    XL36              Res
+                                     429+*
+ 0002AC                              430+CEECAASYSTM DS    X                 Und
+                       00000         431+CEECAASYUND EQU   X'00'               u
+                       00001         432+CEECAASYUNS EQU   X'01'               u
+                       00002         433+CEECAASYVM  EQU   X'02'               V
+                       00003         434+CEECAASYMVS EQU   X'03'               M
+ 0002AD                              435+CEECAAHRDWR DS    X                 Und
+                       00000         436+CEECAAHWUND EQU   X'00'               u
+                       00001         437+CEECAAHWUNS EQU   X'01'               u
+                       00002         438+CEECAAHW370 EQU   X'02'               S
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0D-Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                      00003         439+CEECAAHWXA  EQU   X'03'               S
+                       00004         440+CEECAAHWESA EQU   X'04'               S
+ 0002AE                              441+CEECAASBSYS DS    X                 Und
+                       00000         442+CEECAASSUND EQU   X'00'               u
+                       00001         443+CEECAASSUNS EQU   X'01'               u
+                       00002         444+CEECAASSNON EQU   X'02'               n
+                       00003         445+CEECAASSTSO EQU   X'03'               T
+                       00005         446+CEECAASSCIC EQU   X'05'               C
+ 0002AF                              447+CEECAAFLAG2 DS    X
+                       00080         448+CEECAABIMODAL EQU X'80'             Bim
+                       00040         449+CEECAA_VECTOR EQU X'40'             vec
+                       00020         450+CEECAATIP     EQU X'20'             Thr
+                       00010         451+CEECAA_THREAD_INITIAL EQU X'10'     if
+                       00008         452+CEECAA_TRACE_ACTIVE   EQU X'08'     If
+                                     453+*                                    (T
+                       00004         454+CEECAA_ALTSTK_ACTIVE  EQU X'04'     If
+                       00002         455+CEECAA_ENQ_WAIT_INTERRUPTABLE EQU X'02'
+                                     456+*
+                       00001         457+CEECAA_USRSTK_ACTIVE  EQU X'01'     If
+                                     458+*
+                                     459+*
+ 0002B0                              460+CEECAALEVEL DS    X                 LE/
+                       0001C         461+CEL_LEVEL_IDENTIFIER EQU X'1C'
+ 0002B1                              462+CEECAA_PM   DS    X                 PRO
+ 0002B2                              463+CEECAA_INVAR DS   XL2               At
+ 0002B4                              464+CEECAAGETLS DS    A                 ADD
+ 0002B8                              465+CEECAACELV  DS    A                 Add
+ 0002BC                              466+CEECAAGETS  DS    A                 Add
+ 0002C0                              467+CEECAALBOS  DS    A                 Sta
+ 0002C4                              468+CEECAALEOS  DS    A                 End
+ 0002C8                              469+CEECAALNAB  DS    A                 Nex
+ 0002CC                              470+CEECAADMC   DS    A                 Add
+ 0002D0                              471+CEECAAABCODE DS   0F                Mos
+ 0002D0                              472+CEECAACD    DS    XL4               Mos
+ 0002D4                              473+CEECAARSNCODE DS  0F                Mos
+ 0002D4                              474+CEECAARS    DS    XL4               Mos
+ 0002D8                              475+CEECAAERR   DS    A                 Add
+ 0002DC                              476+CEECAAGETSX DS    A                 Add
+ 0002E0                              477+CEECAADDSA  DS    A                 Add
+ 0002E4                              478+CEECAASECTSIZ DS  F                 Vec
+ 0002E8                              479+CEECAAPARTSUM DS  F                 Vec
+ 0002EC                              480+CEECAASSEXPNT DS  F                 Log
+ 0002F0                              481+CEECAAEDB   DS    A                 add
+ 0002F4                              482+CEECAAPCB   DS    A                 add
+                                     483+* -------------------------------------
+                                     484+* - THE FOLLOWING TWO FIELDS ARE USED F
+                                     485+* -------------------------------------
+ 0002F8                              486+CEECAAEYEPTR DS   A                 add
+ 0002FC                              487+CEECAAPTR   DS    A                 add
+ 000300                              488+CEECAAGETS1 DS    A                 DSA
+ 000304                              489+CEECAASHAB  DS    A                 ABE
+ 000308                              490+CEECAAPRGCK DS    A                 pgm
+ 00030C                              491+CEECAAFLAG1 DS    X                 CAA
+                       00080         492+CEECAASORT  EQU   B'10000000'       Cal
+                       00040         493+CEECAA_USE_OLD_STK  EQU  B'01000000'  u
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0D-Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                      00020         494+CEECAA_CICS_EXT_REG EQU  B'00100000'  C
+                       00010         495+CEECAASHAB_RECOVER_IN_ESTAE_MODE EQU B'
+                                     496+*                                   LE
+                                     497+*                                   ret
+                                     498+*                                   add
+                                     499+*                                   key
+                                     500+*                                   est
+                       00008         501+CEECAASHAB_IGNORED               EQU B'
+                                     502+*                                   Set
+                       00004         503+CEECAA_FETCH_RELES_IN_PROGRESS   EQU B'
+                       00002         504+CEECAA_CICS_VR_SPT EQU  B'00000010'  CI
+ 00030D                              505+CEECAASHAB_KEY    DS  X             IPK
+                                     506+*                                   rou
+ 00030E                              507+            DS    CL2               res
+ 000310                              508+CEECAAURC   DS    F                 Thr
+ 000314                              509+CEECAARSRV1 DS    4A
+                                     510+* -------------------------------------
+                                     511+* - THE FOLLOWING FIELD CONTAINS THE PR
+                                     512+* - CONTROL BLOCK ADDRESS.
+                                     513+* -------------------------------------
+ 000324                              514+CEECAAPICICB DS   A                 Add
+ 000328                              515+CEECAARSRV2  DS   A
+                                     516+* -------------------------------------
+ 00032C                              517+CEECAAGOSMR  DS   H                 Go
+ 00032E                              518+             DS   H                 ski
+                                     519+* -------------------------------------
+ 000330                              520+CEECAALEOV   DS   A                 Add
+ 000334                              521+CEECAA_SIGSCTR        DS  F         SIG
+                                     522+*
+ 000338                              523+CEECAA_SIGSFLG        DS  XL4       SIG
+                                     524+*
+                                     525+*                     First byte
+                                     526+*
+                       00080         527+CEECAA_SIGPUTBACK     EQU X'80'     Sig
+                       00040         528+CEECAA_SA_RESTART     EQU X'40'     SA_
+                                     529+*                     EQU X'20'     <un
+                       00010         530+CEECAA_SIGSAFE        EQU X'10'     Ind
+                                     531+*                                    si
+                                     532+*                                    re
+                                     533+*                                    oc
+                       00008         534+CEECAA_CANCELSAFE     EQU X'08'     Ind
+                                     535+*                                    ca
+                                     536+*                                    de
+                                     537+*                                    wh
+                                     538+*                                    oc
+                       00004         539+CEECAA_SIGRESYNCH     EQU X'04'     One
+                                     540+*                                    ma
+                                     541+*                                    la
+                                     542+*                                    wh
+                                     543+*                                    us
+                       00002         544+CEECAA_FRZ_UNSAFE     EQU X'02'     Thi
+                                     545+*                                   to
+                       00001         546+CEECAA_NOAPPREGS      EQU X'01'     Use
+                                     547+*                                   be
+                                     548+*
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0D-Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                                    549+*                     Second byte
+                                     550+*
+                       00080         551+CEECAA_EINTR_RSOL     EQU   X'80'   Sec
+                                     552+*                                   in
+                                     553+*                                   fro
+                       00040         554+CEECAA_EINTR_PUTB     EQU   X'40'   Sec
+                                     555+*                                   has
+                       00020         556+CEECAA_EINTR_REST     EQU   X'20'   Use
+                                     557+*                                   cat
+                                     558+*                                   res
+                                     559+*                                   SA_
+                       00010         560+CEECAA_EINTR_SIGG     EQU   X'10'   "St
+                                     561+*                                   CEE
+                                     562+*                                   sig
+                                     563+*                                   was
+                                     564+*                     EQU   X'08'   Res
+                                     565+*                     EQU   X'04'   Res
+                                     566+*                     EQU   X'02'   Res
+                                     567+*                     EQU   X'01'   Res
+                                     568+*
+                                     569+*                     (16 unused bits)
+                                     570+*
+ 00033C                              571+CEECAATHDID           DS  CL8       Pos
+ 000344                              572+CEECAA_DCRENT         DS  A         CRE
+ 000348                              573+CEECAA_DANCHOR        DS  A         DCE
+ 00034C                              574+CEECAA_CTOC           DS  A         TOC
+ 000350                              575+CEECAARCB             DS  A         A(R
+ 000354                              576+CEECAACICSRSN         DS  A         CIC
+                                     577+*                                   lan
+ 000358                              578+CEECAAMEMBR           DS  A         Add
+ 00035C                              579+CEECAA_SIGNAL_STATUS  DS  A         Sig
+ 000360                              580+CEECAA_HCOM_REG7      DS 0A         Sav
+ 000360                              581+CEECAA_HCOM_REG14     DS  A         Sav
+ 000364                              582+CEECAA_STACKFLOOR     DS  A         Low
+ 000368                              583+CEECAAHPGETS          DS  A         HP
+ 00036C                              584+CEECAAEDCHPXV         DS  A         C/C
+ 000370                              585+CEECAAFOR1            DS  A         Res
+ 000374                              586+CEECAAFOR2            DS  A         Res
+ 000378                              587+CEECAATHREADHEAPID    DS  A         Thr
+ 00037C                              588+CEECAA_SYS_RTNCODE    DS  F         Sys
+ 000380                              589+CEECAA_SYS_RSNCODE    DS  F         Sys
+ 000384                              590+CEECAAGETFN           DS  A         Add
+ 000388                              591+CEECAA_LER4           DS  CL8       Res
+                                     592+***************************************
+                                     593+*    LE V1R5M0 EXTERNAL CONTROL BLOCK S
+                                     594+*      - any external control block fie
+                                     595+*        in this section.  Extra reserv
+                                     596+*        with the intention of at end o
+                                     597+*        reserved space will be removed
+                                     598+*        will be shifted.
+                                     599+***************************************
+ 000390                              600+CEECAASIGNGPTR        DS  A         Poi
+                                     601+*                                   var
+ 000394                              602+CEECAASIGNG           DS  F         val
+                                     603+*                                    -1
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0D-Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                                    604+*                                     0
+                                     605+*                                    +1
+ 000398                              606+CEECAA_FORDBG         DS  A         Ptr
+                                     607+*                                   FOR
+ 00039C                              608+CEECAAAB_STATUS       DS  X         val
+                       00080         609+CEECAAAB_GR0_VALID    EQU X'80'     CEE
+                       00040         610+CEECAAAB_ICD1_VALID   EQU X'40'     CEE
+                       00020         611+CEECAAAB_ABCC_VALID   EQU X'20'     CEE
+                       00010         612+CEECAAAB_CRC_VALID    EQU X'10'     CEE
+                       00008         613+CEECAAAB_GR15_VALID   EQU X'08'     CEE
+ 00039D                              614+CEECAA_STACKDIRECTION DS  X         Sta
+                       00000         615+CEECAASTACK_UP        EQU X'00'     Up
+                       00001         616+CEECAASTACK_DOWN      EQU X'01'     Dow
+ 00039E                              617+                      DS  XL2       RES
+ 0003A0                              618+CEECAAAB_GR0          DS  A         Reg
+ 0003A4                              619+CEECAAAB_ICD1         DS  A         SDW
+ 0003A8                              620+CEECAAAB_ABCC         DS  A         SDW
+ 0003AC                              621+CEECAAAB_CRC          DS  A         SDW
+                       002D4         622+CEECAAAB_GR15         EQU CEECAARS  reg
+ 0003B0                              623+CEECAAAGTS            DS  A         C c
+ 0003B4                              624+CEECAA_LER5N1         DS  CL4       res
+ 0003B8                              625+CEECAAHERP            DS  A         A(C
+ 0003BC                              626+CEECAAUSTKBOS         DS  A         Sta
+ 0003C0                              627+CEECAAUSTKEOS         DS  A         End
+ 0003C4                              628+CEECAAUSERRTN@        DS  A         A(U
+ 0003C8                              629+CEECAAUDHOOK          DS  XL8       hoo
+                                     630+*                     DS  BL8       res
+                                     631+*CEECAAUDHOOKSW        DS  BL4       ho
+                                     632+*                      DS  BL4       re
+                                     633+*                      DS  XL6       re
+ 0003D0                              634+CEECAACEL_HPXV_B      DS  A         Add
+                                     635+*                                    ve
+ 0003D4                              636+CEECAACEL_HPXV_M      DS  A         Add
+                                     637+*                                    ve
+ 0003D8                              638+CEECAACEL_HPXV_L      DS  A         Add
+                                     639+*                                    co
+                                     640+*                                    Lo
+ 0003DC                              641+CEECAACEL_HPXV_O      DS  A         Add
+                                     642+*                                    co
+                                     643+*                                    Op
+ 0003E0                              644+CEECAACEL4VEC3        DS  A         Add
+ 0003E4                              645+CEECAA_CEEDLLF          DS A        Add
+                                     646+*                                   sam
+ 0003E8                              647+CEECAA_SAVSTACK       DS  A         Sav
+                                     648+*                                     O
+ 0003EC                              649+                      DS  XL4       Res
+ 0003F0                              650+CEECAA_USER_WORD      DS  F         CAA
+ 0003F4                              651+CEECAA_SAVSTACK_ASYNC DS  A         Zer
+                                     652+*                                   whe
+                                     653+*                                   sav
+                                     654+*                                   is
+                                     655+*                                   sig
+ 0003F8                              656+                      DS  A         Res
+ 0003FC                              657+CEECAA_STACK_GUARD    DS  XL4       Sta
+                       00094         658+CEECELVGTUN EQU  148                Off
+1
+   Active Usings: MAIN,R11  CEEDSA,R13
+0D-Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0000000                              659          END   MAIN               NOMIN
+ 000148 00000000                     660                =V(CEEMOUT)
+ 00014C 00000000                     661                =V(CEETREC)
+1                                                 Relocation Dictionary
+-   Pos.Id   Rel.Id   Address  Type    Length  Action
+0  00000001 00000001 00000050   A         4       +
+   00000001 00000001 00000090   A         4       +
+   00000001 00000001 00000094   A         4       +
+   00000001 00000001 000000A0   A         4       +
+   00000001 00000001 000000A4   A         4       +
+   00000001 00000001 000000D4   A         4       +
+   00000001 00000001 000000F8   A         4       +
+   00000001 00000001 00000104   A         4       +
+   00000001 00000001 0000011C   A         4       +
+   00000001 00000001 00000130   A         4       +
+   00000001 00000002 00000054   V         4      ST
+   00000001 00000004 00000108   V         4      ST
+   00000001 00000004 00000124   A         4       +
+   00000001 00000005 0000010C   V         4      ST
+   00000001 00000006 00000148   V         4      ST
+   00000001 00000007 0000014C   V         4      ST
+   00000003 00000001 00000150   A         4       +
+1                               Ordinary Symbol and Literal Cross Reference
+-Symbol   Length   Value     Id    R Type Asm  Program   Defn References
+0CEEBETBL      1 00000000 00000005     T                  180  180
+ CEECAA        1 00000000 FFFFFFFD     J                  321   35    37    51
+ CEECAAEOS
+               4 0000000C FFFFFFFD     A  A               333   35
+ CEECAAGETS
+               4 000002BC FFFFFFFD     A  A               466   37
+ CEECAALWS
+               4 00000280 FFFFFFFD     A  A               426   51
+ CEECAARS      4 000002D4 FFFFFFFD     X  X               474  622
+ CEEDSA        1 00000000 FFFFFFFF     J                  225   23M   31    44M
+ CEEDSABKC
+               4 00000004 FFFFFFFF     A  A               232   44M
+ CEEDSAEND
+               8 00000080 FFFFFFFF     D  D               264  265
+ CEEDSAFLAGS
+               2 00000000 FFFFFFFF     X  X               227   46M   46
+ CEEDSAFWC
+               4 00000008 FFFFFFFF     A  A               233   47M
+ CEEDSAHP_BIAS
+            2048 00000000 FFFFFFFE     X  X               281  282
+ CEEDSAHP_FIXED
+               1 00000800 FFFFFFFE     X  X               283  285   287   307
+ CEEDSAHP8TO15
+               4 00000810 FFFFFFFE     F  F               292  293
+ CEEDSALWS
+               4 00000048 FFFFFFFF     A  A               249   51M
+ CEEDSANAB
+               4 0000004C FFFFFFFF     A  A               250   31    45M
+ CEEDSAR14
+               4 0000000C FFFFFFFF     F  F               234   23M
+ CEEDSASZ      8 00000080 FFFFFFFF A   U                  265   18
+ CEEINPL       8 000000F8 00000001     D  D               170   41   172
+ CEEINPLSTST
+               4 00000100 00000001     F  F               173  172
+ CEEINPL0001
+               4 00000050 00000001     A  A                41   24
+ CEEINT        1 00000000 00000002     T                   42   42
+ CEEINT0001
+               4 00000054 00000001     V  V                42   25
+ CEEMAIN       1 00000150 00000003     J                   72   73    74
+ CEEMOUT       1 00000000 00000006     T                  660  660
+ CEESTART      1 00000000 00000004     T                  191  179   197
+ CEETIMES      4 00000134 00000001     F  F               209  199
+ CEETREC       1 00000000 00000007     T                  661  661
+ CEET0002      4 00000090 00000001     A  A                68   65
+ CEEX0001      1 00000058 00000001     U                   43   36B   40B
+ CEEY0001      8 00000080 00000001 A   U                   18   19    32    33
+ CEEZ0001      1 00000014 00000001     U                   22   16B
+ DEST          4 000000CC 00000001     F  F                88   82
+ INPLEPA       4 0000011C 00000001     A  A               184  171   178
+ MAIN          1 00000000 00000001     J                    9   10    11    12
+                                                               659
+ MAINPPA       4 000000D0 00000001     F  F               107   20
+ PARMLIST      4 000000A0 00000001     R  A                81   57
+ PPANL0003
+1                               Ordinary Symbol and Literal Cross Reference
+-Symbol   Length   Value     Id    R Type Asm  Program   Defn References
+0              2 000000F0 00000001     R  A               168  108
+ PPA20003      4 00000120 00000001     F  F               192  128   199
+ STRBEGIN     28 000000AE 00000001     C  C                86   87
+ STRING        2 000000AC 00000001     R  A                85   81
+ STRLEN        1 0000001C 00000001 A   U                   87   85
+ =V(CEEMOUT)
+               4 00000148 00000001     V                  660   58
+ =V(CEETREC)
+               4 0000014C 00000001     V                  661   66
+1                                  Unreferenced Symbols Defined in CSECTs
+-  Defn  Symbol
+0   106  PPA10003
+    200  PPA2M0003
+    197  PPA2S0003
+1                                          Macro and Copy Code Source Summary
+- Con Source                                        Volume    Members
+0  L2 CEE.SCEEMAC                                   VTMVSC    CEECAA   CEEDNUT
+1                                                Dsect Cross Reference
+-Dsect     Length      Id       Defn
+0CEECAA   00000400  FFFFFFFD     321
+ CEEDSA   00000080  FFFFFFFF     225
+ CEEDSAHP 00000840  FFFFFFFE     275
+1                                                      Using Map
+-
+   Stmt  -----Location----- Action ----------------Using----------------- Reg Ma
+           Count      Id           Type          Value    Range     Id        Di
+0    13  00000000  00000001 PUSH
+     14  00000000  00000001 DROP                                           **
+     15  00000000  00000001 USING  ORDINARY    00000000 00001000 00000001  15 00
+     26  00000020  00000001 DROP                                           15
+     49  0000006C  00000001 POP
+     50  0000006C  00000001 USING  ORDINARY    00000000 00001000 FFFFFFFF  13 00
+     54  0000007A  00000001 USING  ORDINARY    00000000 00001000 00000001  11 00
+1                                   General Purpose Register Cross Reference
+- Register  References (M=modified, B=branch, U=USING, D=DROP, N=index)
+0    0(0)      23    32M   33M   34M   35    45
+     1(1)      23    28    31M   34    39M   44    45    46    46    47    48
+     2(2)      23    24M   28M   52
+     3(3)      23
+     4(4)      23
+     5(5)      23
+     6(6)      23
+     7(7)      23
+     8(8)      23
+     9(9)      23
+    10(A)      23
+    11(B)      23    53M   54U
+    12(C)      23    29    35    37    51
+    13(D)      23    31    44    47    48M   50U
+    14(E)      23    27M   29M   30    38M   59M   67M
+    15(F)      15U   21    23    25M   26D   27B   37M   38B   39    58M   59B
+1                                  Diagnostic Cross Reference and Assembler Summ
+-
+0     No Statements Flagged in this Assembly
+ HIGH LEVEL ASSEMBLER, 5696-234, RELEASE 6.0, PTF UI61337
+0SYSTEM: z/OS 02.03.00              JOBNAME: KC03CCAD    STEPNAME: STEP1      PR
+0Unicode Module:   ASMA047C   From Page     1148   To Page    17584           EC
+ Data Sets Allocated for this Assembly
+  Con DDname   Data Set Name                                Volume  Member
+   P1 SYSIN    KC03CCA.LANG.SOURCE                          KCTR07  ASMLE
+   L1 SYSLIB   SYS1.MACLIB                                  VTMVSC
+   L2          CEE.SCEEMAC                                  VTMVSC
+      SYSLIN   SYS21097.T083758.RA000.KC03CCAD.OBJ.H01      TEMP00
+      SYSPRINT KC03CCA.KC03CCAD.JOB06961.D0000101.?
+
+   26760K allocated to Buffer Pool       Storage required     432K
+      33 Primary Input Records Read         2190 Library Records Read
+       0 ASMAOPT Records Read                927 Primary Print Records Written
+      14 Object Records Written                0 ADATA Records Written
+0Assembly Start Time: 08.37.59 Stop Time: 08.37.59 Processor Time: 00.00.00.0028
+ Return Code 000
+
+1z/OS V2 R3 BINDER     08:37:58 WEDNESDAY APRIL  7, 2021
+ BATCH EMULATOR  JOB(KC03CCAD) STEP(STEP1   ) PGM= HEWL      PROCEDURE(L       )
+ IEW2278I B352 INVOCATION PARAMETERS - MAP,LET,LIST
+
+1                         *** M O D U L E  M A P ***
+
+ ---------------
+ CLASS  B_TEXT            LENGTH =      768  ATTRIBUTES = CAT,   LOAD, RMODE=ANY
+                          OFFSET =        0 IN SEGMENT 001     ALIGN = DBLWORD
+ ---------------
+
+  SECTION    CLASS                                      ------- SOURCE --------
+   OFFSET   OFFSET  NAME                TYPE    LENGTH  DDNAME   SEQ  MEMBER
+
+                 0  MAIN               CSECT       150  SYSLIN    01  **NULL**
+
+               150  CEEMAIN            CSECT         8  SYSLIN    01  **NULL**
+
+               158  CEETREC         *  CSECT        14  SYSLIB    01  CEETREC
+
+               170  CEEMOUT         *  CSECT        14  SYSLIB    01  CEEMOUT
+
+               188  CEEBETBL        *  CSECT        28  SYSLIB    01  CEEBETBL
+
+               1B0  CEESTART        *  CSECT        B0  SYSLIB    01  CEESTART
+
+               260  CEEBPIRA        *  CSECT       2A0  SYSLIB    01  CEEINT
+        0      260     CEEINT             LABEL
+        0      260     CEEBPIRB           LABEL
+        0      260     CEEBPIRC           LABEL
+
+               500  CEECPYRT        *  CSECT        E2  SYSLIB    01  CEEINT
+
+               5E8  CEEBPUBT        *  CSECT        70  SYSLIB    01  CEEBPUBT
+
+               658  CEEBTRM         *  CSECT        A4  SYSLIB    01  CEEBTRM
+
+               700  CEEBLLST        *  CSECT        5C  SYSLIB    01  CEEBLLST
+       10      710     CEELLIST           LABEL
+
+               760  CEEBINT         *  CSECT         8  SYSLIB    01  CEEBINT
+1          ***  DATA SET SUMMARY  ***
+
+ DDNAME    CONCAT   FILE IDENTIFICATION
+
+ SYSLIB      01     CEE.SCEELKED
+ SYSLIN      01     SYS21097.T083758.RA000.KC03CCAD.OBJ.H01
+
+           *** E N D  O F  M O D U L E  M A P ***
+
+
+
+                                 *** O P E R A T I O N   S U M M A R Y   R E P O
+
+1PROCESSING OPTIONS:
+
+    ALIASES             NO
+    ALIGN2              NO
+    AMODE               UNSPECIFIED
+    CALL                YES
+    CASE                UPPER
+    COMPAT              UNSPECIFIED
+    COMPRESS            AUTO
+    DCBS                NO
+    DYNAM               NO
+    EXTATTR             UNSPECIFIED
+    EXITS:              NONE
+    FILL                NONE
+    GID                 UNSPECIFIED
+    HOBSET              NO
+    INFO                NO
+    LET                 08
+    LINECT              060
+    LIST                SUMMARY
+    LISTPRIV            NO
+    LONGPARM            NO
+    MAP                 YES
+    MAXBLK              032760
+    MODMAP              NO
+    MSGLEVEL            00
+    OVLY                NO
+    PRINT               YES
+    RES                 NO
+    REUSABILITY         UNSPECIFIED
+    RMODE               UNSPECIFIED
+    RMODEX              NO
+    SIGN                NO
+    STORENX             NOREPLACE
+    STRIPCL             NO
+    STRIPSEC            NO
+    SYMTRACE
+    TERM                NO
+    TRAP                ON
+    UID                 UNSPECIFIED
+    UPCASE              NO
+    WKSPACE             000000K,000000K
+    XCAL                NO
+    XREF                NO
+    ***END OF OPTIONS***
+
+
+
+
+1SAVE OPERATION SUMMARY:
+
+    MEMBER NAME         ASMLE
+    LOAD LIBRARY        KC03CCA.LANG.LOAD
+    PROGRAM TYPE        LOAD MODULE
+    VOLUME SERIAL       KCTR16
+    MAX BLOCK           27920
+    DISPOSITION         REPLACED
+    TIME OF SAVE        08.37.59  APR  7, 2021
+
+
+1SAVE MODULE ATTRIBUTES:
+
+    AC                  000
+    AMODE                31
+    COMPRESSION         NONE
+    DC                  NO
+    EDITABLE            YES
+    EXCEEDS 16MB        NO
+    EXECUTABLE          YES
+    LONGPARM            NO
+    MIGRATABLE          YES
+    OL                  NO
+    OVLY                NO
+    PACK,PRIME          NO,NO
+    PAGE ALIGN          NO
+    REFR                NO
+    RENT                NO
+    REUS                NO
+    RMODE               ANY
+    SCTR                NO
+    SIGN                NO
+    SSI
+    SYM GENERATED       NO
+    TEST                NO
+    XPLINK              NO
+    MODULE SIZE (HEX)   00000768
+
+
+1 ENTRY POINT AND ALIAS SUMMARY:
+
+  NAME:            ENTRY TYPE AMODE C_OFFSET CLASS NAME        STATUS
+
+  MAIN              MAIN_EP      31 00000000 B_TEXT
+
+                          *** E N D   O F   O P E R A T I O N   S U M M A R Y
+
+
+
+
+1z/OS V2 R3 BINDER     08:37:58 WEDNESDAY APRIL  7, 2021
+ BATCH EMULATOR  JOB(KC03CCAD) STEP(STEP1   ) PGM= HEWL      PROCEDURE(L       )
+ IEW2008I 0F03 PROCESSING COMPLETED.  RETURN CODE =  0.
+
+
+
+1----------------------
+ MESSAGE SUMMARY REPORT
+ ----------------------
+  TERMINAL MESSAGES      (SEVERITY = 16)
+  NONE
+
+  SEVERE MESSAGES        (SEVERITY = 12)
+  NONE
+
+  ERROR MESSAGES         (SEVERITY = 08)
+  NONE
+
+  WARNING MESSAGES       (SEVERITY = 04)
+  NONE
+
+  INFORMATIONAL MESSAGES (SEVERITY = 00)
+  2008  2278
+
+
+  **** END OF MESSAGE SUMMARY REPORT ****
+
+

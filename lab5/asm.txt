@@ -1,0 +1,402 @@
+1                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E
+0
+ 08.38.06 JOB06963 ---- WEDNESDAY, 07 APR 2021 ----
+ 08.38.06 JOB06963  IRR010I  USERID KC03CCA  IS ASSIGNED TO THIS JOB.
+ 08.38.06 JOB06963  IEF677I WARNING MESSAGE(S) FOR JOB KC03CCA1 ISSUED
+ 08.38.06 JOB06963  ICH70001I KC03CCA  LAST ACCESS AT 08:37:58 ON WEDNESDAY, APR
+ 08.38.06 JOB06963  $HASP373 KC03CCA1 STARTED - INIT 1    - CLASS A        - SYS
+ 08.38.07 JOB06963  $HASP395 KC03CCA1 ENDED - RC=0000
+0------ JES2 JOB STATISTICS ------
+-  07 APR 2021 JOB EXECUTION DATE
+-           14 CARDS READ
+-          403 SYSOUT PRINT RECORDS
+-            0 SYSOUT PUNCH RECORDS
+-           24 SYSOUT SPOOL KBYTES
+-         0.01 MINUTES EXECUTION TIME
+         1 //KC03CCA1 JOB 1,'YUHSUAN',NOTIFY=&SYSUID
+           //*ZSCHOLIB JCLLIB ORDER=(ZPROF.PROCLIB)
+           //**************************************************
+           //* C KC03CCA YOURID ALL
+           //* C ZPROF PROFUID ALL
+           //*   ==> IF YOU USE NOT ZPROF AS INSTRUCTORID
+           //* DELETE ZSCHOLIB STATEMENT IF YOU WANT TO USE
+           //*       THE DEFAULT PROC LIBRARY
+           //**************************************************
+           //* COMPILE ASSEMBLER PROGRAM
+           //**************************************************
+           IEFC653I SUBSTITUTION JCL - 1,'YUHSUAN',NOTIFY=KC03CCA
+         2 //STEP1 EXEC HLASMCL
+         3 XXASMACL   PROC
+           XX*
+           XX*******************************************************************
+           XX*
+           XX*  Licensed Materials - Property of IBM
+           XX*
+           XX*  5696-234   5694-A01
+           XX*
+           XX*  Copyright IBM Corporation 1992, 2008 All Rights Reserved.
+           XX*
+           XX*  US Government Users Restricted Rights - Use, duplication
+           XX*  or disclosure restricted by GSA ADP Schedule Contract
+           XX*  with IBM Corp.
+           XX*
+           XX*******************************************************************
+           XX*
+           XX*  ASMACL
+           XX*
+           XX*  This procedure runs the High Level Assembler, link-edits the
+           XX*  newly assembled program.
+           XX*
+           XX*******************************************************************
+           XX*
+         4 XXC        EXEC PGM=ASMA90
+           XX*
+         5 XXSYSLIB   DD  DSN=SYS1.MACLIB,DISP=SHR
+         6 XXSYSUT1   DD  DSN=&&SYSUT1,SPACE=(16384,(120,120),,,ROUND),
+           XX             UNIT=SYSALLDA,BUFNO=1
+         7 XXSYSPRINT DD  SYSOUT=*
+         8 XXSYSLIN   DD  DSN=&&OBJ,SPACE=(3040,(40,40),,,ROUND),
+           XX             UNIT=SYSALLDA,DISP=(MOD,PASS),
+           XX             BLKSIZE=3040,LRECL=80,RECFM=FB,BUFNO=1
+           XX*
+         9 //C.SYSIN      DD DSN=&SYSUID..LANG.SOURCE(ASM),DISP=SHR
+           IEFC653I SUBSTITUTION JCL - DSN=KC03CCA.LANG.SOURCE(ASM),DISP=SHR
+        10 XXL        EXEC PGM=HEWL,PARM='MAP,LET,LIST,NCAL',COND=(8,LT,C)
+           XX*
+        11 XXSYSLIN   DD  DSN=&&OBJ,DISP=(OLD,DELETE)
+        12 XX         DD  DDNAME=SYSIN
+        13 //L.SYSLMOD    DD DSN=KC03CCA.LANG.LOAD(ASM),DISP=SHR
+           X/SYSLMOD  DD  DISP=(,PASS),UNIT=SYSALLDA,SPACE=(CYL,(1,1,1)),
+           X/             DSN=&&GOSET(GO)
+        14 XXSYSUT1   DD  DSN=&&SYSUT1,SPACE=(1024,(120,120),,,ROUND),
+           XX             UNIT=SYSALLDA,BUFNO=1
+        15 XXSYSPRINT DD  SYSOUT=*
+           XX*
+  STMT NO. MESSAGE
+         2 IEFC001I PROCEDURE HLASMCL WAS EXPANDED USING SYSTEM LIBRARY SYS1.PRO
+        15 IEF686I DDNAME REFERRED TO ON DDNAME KEYWORD IN PRIOR STEP WAS NOT RE
+ ICH70001I KC03CCA  LAST ACCESS AT 08:37:58 ON WEDNESDAY, APRIL 7, 2021
+ IEFA111I KC03CCA1 IS USING THE FOLLOWING JOB RELATED SETTINGS:
+          SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+ IEF236I ALLOC. FOR KC03CCA1 C STEP1
+ IEF237I 1001 ALLOCATED TO SYSLIB
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT1  )
+         DSN (SYS21097.T083806.RA000.KC03CCA1.SYSUT1.H01  )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IGD101I SMS ALLOCATED TO DDNAME (SYSLIN  )
+         DSN (SYS21097.T083806.RA000.KC03CCA1.OBJ.H01     )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD103I SMS ALLOCATED TO DDNAME SYSIN
+ IEF142I KC03CCA1 C STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IEF285I   SYS1.MACLIB                                  KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IGD105I SYS21097.T083806.RA000.KC03CCA1.SYSUT1.H01   DELETED,   DDNAME=SYSUT1
+ IEF285I   KC03CCA.KC03CCA1.JOB06963.D0000101.?         SYSOUT
+ IGD106I SYS21097.T083806.RA000.KC03CCA1.OBJ.H01      PASSED,    DDNAME=SYSLIN
+ IGD104I KC03CCA.LANG.SOURCE                          RETAINED,  DDNAME=SYSIN
+ IEF373I STEP/C       /START 2021097.0838
+ IEF032I STEP/C       /STOP  2021097.0838
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+         VIRT:   248K  SYS:   248K  EXT:    32768K  SYS:    11924K
+         ATB- REAL:                  1080K  SLOTS:                     0K
+              VIRT- ALLOC:      18M SHRD:       0M
+ IEF236I ALLOC. FOR KC03CCA1 L STEP1
+ IGD103I SMS ALLOCATED TO DDNAME SYSLIN
+ IEF237I DMY  ALLOCATED TO
+ IGD103I SMS ALLOCATED TO DDNAME SYSLMOD
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT1  )
+         DSN (SYS21097.T083806.RA000.KC03CCA1.SYSUT1.H01  )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF142I KC03CCA1 L STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD105I SYS21097.T083806.RA000.KC03CCA1.OBJ.H01      DELETED,   DDNAME=SYSLIN
+ IGD104I KC03CCA.LANG.LOAD                            RETAINED,  DDNAME=SYSLMOD
+ IGD105I SYS21097.T083806.RA000.KC03CCA1.SYSUT1.H01   DELETED,   DDNAME=SYSUT1
+ IEF285I   KC03CCA.KC03CCA1.JOB06963.D0000102.?         SYSOUT
+ IEF373I STEP/L       /START 2021097.0838
+ IEF032I STEP/L       /STOP  2021097.0838
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+         VIRT:   100K  SYS:   260K  EXT:     1640K  SYS:    11900K
+         ATB- REAL:                  1068K  SLOTS:                     0K
+              VIRT- ALLOC:      15M SHRD:       0M
+ IEF375I  JOB/KC03CCA1/START 2021097.0838
+ IEF033I  JOB/KC03CCA1/STOP  2021097.0838
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+1                                         High Level Assembler Option Summary
+-
+0  No Overriding ASMAOPT Parameters
+   No Overriding Parameters
+   No Process Statements
+
+
+   Options for this Assembly
+0                    NOADATA
+                       ALIGN
+                     NOASA
+                       BATCH
+                       CODEPAGE(047C)
+                     NOCOMPAT
+                     NODATAMAP
+                     NODBCS
+                     NODECK
+                       DXREF
+                       ESD
+                     NOEXIT
+                       FAIL(NOMSG,NOMNOTE,MAXERRS(500))
+                       FLAG(0,ALIGN,CONT,EXLITW,NOIMPLEN,NOLONGER,NOPAGE0,PUSH,R
+                     NOFOLD
+                     NOGOFF
+                     NOINFO
+                       ILMA
+                       LANGUAGE(EN)
+                     NOLIBMAC
+                       LINECOUNT(60)
+                       LIST(121)
+                       MACHINE(,NOLIST)
+                       MXREF(SOURCE)
+                       OBJECT
+                       OPTABLE(UNI,NOLIST)
+                     NOPCONTROL
+                     NOPESTOP
+                     NOPROFILE
+                     NORA2
+                     NORENT
+                       RLD
+                       RXREF
+                       SECTALGN(8)
+                       SIZE(MAX)
+                     NOSUPRWARN
+                       SYSPARM()
+                     NOTERM
+                     NOTEST
+                       THREAD
+                     NOTRANSLATE
+                       TYPECHECK(MAGNITUDE,REGISTER)
+                       USING(NOLIMIT,MAP,WARN(15))
+                     NOWORKFILE
+                       XREF(SHORT,UNREFS)
+
+   No Overriding DD Names
+1                                              External Symbol Dictionary
+-Symbol   Type   Id     Address  Length   Owner Id Flags Alias-of
+0MAIN      SD 00000001 00000000 0000000C             00
+1
+   Active Usings: None
+0  Loc  Object Code    Addr1 Addr2  Stmt   Source Statement
+0                                      1 * =====================================
+                                       2 *
+                                       3 * SHOWS A SIMPLE ASSEMBLER ROUTINE THAT
+                                       4 * RETURNS WITH A RETURN CODE OF 15
+                                       5 *
+                                       6 * =====================================
+ 000000                00000 0000C     7 MAIN     CSECT
+ 000000 90EC D00C            0000C     8          STM      14,12,12(13)    SAVE
+ 000004 18CF                           9          LR       12,15           SET B
+                  R:C  00000          10          USING    MAIN,12         ESTAB
+ 000006 41F0 000F            0000F    11          LA       15,15           SET R
+ 00000A 07FE                          12          BR       14              RETUR
+ 000000                               13          END      MAIN
+1                               Ordinary Symbol and Literal Cross Reference
+-Symbol   Length   Value     Id    R Type Asm  Program   Defn References
+0MAIN          1 00000000 00000001     J                    7   10U   13
+1                                                      Using Map
+-
+   Stmt  -----Location----- Action ----------------Using----------------- Reg Ma
+           Count      Id           Type          Value    Range     Id        Di
+0    10  00000006  00000001 USING  ORDINARY    00000000 00001000 00000001  12 00
+1                                   General Purpose Register Cross Reference
+- Register  References (M=modified, B=branch, U=USING, D=DROP, N=index)
+0    0(0)       8
+     1(1)       8
+     2(2)       8
+     3(3)       8
+     4(4)       8
+     5(5)       8
+     6(6)       8
+     7(7)       8
+     8(8)       8
+     9(9)       8
+    10(A)       8
+    11(B)       8
+    12(C)       8     9M   10U
+    13(D)       8
+    14(E)       8    12B
+    15(F)       8     9    11M
+1                                  Diagnostic Cross Reference and Assembler Summ
+-
+0     No Statements Flagged in this Assembly
+ HIGH LEVEL ASSEMBLER, 5696-234, RELEASE 6.0, PTF UI61337
+0SYSTEM: z/OS 02.03.00              JOBNAME: KC03CCA1    STEPNAME: STEP1      PR
+0Unicode Module:   ASMA047C   From Page     1148   To Page    17584           EC
+ Data Sets Allocated for this Assembly
+  Con DDname   Data Set Name                                Volume  Member
+   P1 SYSIN    KC03CCA.LANG.SOURCE                          KCTR07  ASM
+   L1 SYSLIB   SYS1.MACLIB                                  VTMVSC
+      SYSLIN   SYS21097.T083806.RA000.KC03CCA1.OBJ.H01      TEMP00
+      SYSPRINT KC03CCA.KC03CCA1.JOB06963.D0000101.?
+
+   26760K allocated to Buffer Pool       Storage required     200K
+      13 Primary Input Records Read            0 Library Records Read
+       0 ASMAOPT Records Read                126 Primary Print Records Written
+       3 Object Records Written                0 ADATA Records Written
+0Assembly Start Time: 08.38.06 Stop Time: 08.38.06 Processor Time: 00.00.00.0002
+ Return Code 000
+
+1z/OS V2 R3 BINDER     08:38:06 WEDNESDAY APRIL  7, 2021
+ BATCH EMULATOR  JOB(KC03CCA1) STEP(STEP1   ) PGM= HEWL      PROCEDURE(L       )
+ IEW2278I B352 INVOCATION PARAMETERS - MAP,LET,LIST,NCAL
+
+1                         *** M O D U L E  M A P ***
+
+ ---------------
+ CLASS  B_TEXT            LENGTH =        C  ATTRIBUTES = CAT,   LOAD, RMODE= 24
+                          OFFSET =        0 IN SEGMENT 001     ALIGN = DBLWORD
+ ---------------
+
+  SECTION    CLASS                                      ------- SOURCE --------
+   OFFSET   OFFSET  NAME                TYPE    LENGTH  DDNAME   SEQ  MEMBER
+
+                 0  MAIN               CSECT         C  SYSLIN    01  **NULL**
+1          ***  DATA SET SUMMARY  ***
+
+ DDNAME    CONCAT   FILE IDENTIFICATION
+
+ SYSLIN      01     SYS21097.T083806.RA000.KC03CCA1.OBJ.H01
+
+           *** E N D  O F  M O D U L E  M A P ***
+
+
+
+                                 *** O P E R A T I O N   S U M M A R Y   R E P O
+
+1PROCESSING OPTIONS:
+
+    ALIASES             NO
+    ALIGN2              NO
+    AMODE               UNSPECIFIED
+    CALL                NO
+    CASE                UPPER
+    COMPAT              UNSPECIFIED
+    COMPRESS            AUTO
+    DCBS                NO
+    DYNAM               NO
+    EXTATTR             UNSPECIFIED
+    EXITS:              NONE
+    FILL                NONE
+    GID                 UNSPECIFIED
+    HOBSET              NO
+    INFO                NO
+    LET                 08
+    LINECT              060
+    LIST                SUMMARY
+    LISTPRIV            NO
+    LONGPARM            NO
+    MAP                 YES
+    MAXBLK              032760
+    MODMAP              NO
+    MSGLEVEL            00
+    OVLY                NO
+    PRINT               YES
+    RES                 NO
+    REUSABILITY         UNSPECIFIED
+    RMODE               UNSPECIFIED
+    RMODEX              NO
+    SIGN                NO
+    STORENX             NOREPLACE
+    STRIPCL             NO
+    STRIPSEC            NO
+    SYMTRACE
+    TERM                NO
+    TRAP                ON
+    UID                 UNSPECIFIED
+    UPCASE              NO
+    WKSPACE             000000K,000000K
+    XCAL                NO
+    XREF                NO
+    ***END OF OPTIONS***
+
+
+
+
+1SAVE OPERATION SUMMARY:
+
+    MEMBER NAME         ASM
+    LOAD LIBRARY        KC03CCA.LANG.LOAD
+    PROGRAM TYPE        LOAD MODULE
+    VOLUME SERIAL       KCTR16
+    MAX BLOCK           27920
+    DISPOSITION         REPLACED
+    TIME OF SAVE        08.38.07  APR  7, 2021
+
+
+1SAVE MODULE ATTRIBUTES:
+
+    AC                  000
+    AMODE                24
+    COMPRESSION         NONE
+    DC                  NO
+    EDITABLE            YES
+    EXCEEDS 16MB        NO
+    EXECUTABLE          YES
+    LONGPARM            NO
+    MIGRATABLE          YES
+    OL                  NO
+    OVLY                NO
+    PACK,PRIME          NO,NO
+    PAGE ALIGN          NO
+    REFR                NO
+    RENT                NO
+    REUS                NO
+    RMODE                24
+    SCTR                NO
+    SIGN                NO
+    SSI
+    SYM GENERATED       NO
+    TEST                NO
+    XPLINK              NO
+    MODULE SIZE (HEX)   00000010
+
+
+1 ENTRY POINT AND ALIAS SUMMARY:
+
+  NAME:            ENTRY TYPE AMODE C_OFFSET CLASS NAME        STATUS
+
+  MAIN              MAIN_EP      24 00000000 B_TEXT
+
+                          *** E N D   O F   O P E R A T I O N   S U M M A R Y
+
+
+
+
+1z/OS V2 R3 BINDER     08:38:06 WEDNESDAY APRIL  7, 2021
+ BATCH EMULATOR  JOB(KC03CCA1) STEP(STEP1   ) PGM= HEWL      PROCEDURE(L       )
+ IEW2008I 0F03 PROCESSING COMPLETED.  RETURN CODE =  0.
+
+
+
+1----------------------
+ MESSAGE SUMMARY REPORT
+ ----------------------
+  TERMINAL MESSAGES      (SEVERITY = 16)
+  NONE
+
+  SEVERE MESSAGES        (SEVERITY = 12)
+  NONE
+
+  ERROR MESSAGES         (SEVERITY = 08)
+  NONE
+
+  WARNING MESSAGES       (SEVERITY = 04)
+  NONE
+
+  INFORMATIONAL MESSAGES (SEVERITY = 00)
+  2008  2278
+
+
+  **** END OF MESSAGE SUMMARY REPORT ****
+
+

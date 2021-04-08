@@ -1,0 +1,554 @@
+1                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E
+0
+ 08.41.20 JOB06981 ---- WEDNESDAY, 07 APR 2021 ----
+ 08.41.20 JOB06981  IRR010I  USERID KC03CCA  IS ASSIGNED TO THIS JOB.
+ 08.41.20 JOB06981  IEF677I WARNING MESSAGE(S) FOR JOB KC03CCAD ISSUED
+ 08.41.21 JOB06981  ICH70001I KC03CCA  LAST ACCESS AT 08:40:02 ON WEDNESDAY, APR
+ 08.41.21 JOB06981  $HASP373 KC03CCAD STARTED - INIT 1    - CLASS A        - SYS
+ 08.41.25 JOB06981  $HASP395 KC03CCAD ENDED - RC=0000
+0------ JES2 JOB STATISTICS ------
+-  07 APR 2021 JOB EXECUTION DATE
+-           16 CARDS READ
+-          559 SYSOUT PRINT RECORDS
+-            0 SYSOUT PUNCH RECORDS
+-           37 SYSOUT SPOOL KBYTES
+-         0.08 MINUTES EXECUTION TIME
+         1 //KC03CCAD JOB 1,'YUHSUAN',NOTIFY=&SYSUID
+           //*SCHOLIB JCLLIB ORDER=(ZPROF.PROCLIB)
+           //**************************************************
+           //* C KC03CCA YOURID ALL
+           //* C ZPROF PROFUID ALL
+           //*   ==> IF YOU USE NOT ZPROF AS INSTRUCTORID
+           //* DELETE ZSCHOLIB STATEMENT IF YOU WANT TO USE
+           //*       THE DEFAULT PROC LIBRARY
+           //* ORIGINAL COPIED FROM  GMULLER.LANG.CNTL
+           //**************************************************
+           //* COMPILE COBOL PROGRAM
+           //**************************************************
+           IEFC653I SUBSTITUTION JCL - 1,'YUHSUAN',NOTIFY=KC03CCA
+         2 //STEP1 EXEC IGYWCL,LNGPRFX=IGY420
+         3 XXIGYWCL PROC  LNGPRFX='IGY620',
+           XX             LIBPRFX='CEE',
+           XX             PGMLIB='&&GOSET',GOPGM=GO
+           XX*
+           XX*******************************************************************
+           XX*
+           XX*  Enterprise COBOL for z/OS
+           XX*               Version 6 Release 2 Modification 0
+           XX*
+           XX*  LICENSED MATERIALS - PROPERTY OF IBM.
+           XX*
+           XX*  5655-W32 COPYRIGHT IBM CORP. 1983, 2015
+           XX*  ALL RIGHTS RESERVED
+           XX*
+           XX*  US GOVERNMENT USERS RESTRICTED RIGHTS - USE,
+           XX*  DUPLICATION OR DISCLOSURE RESTRICTED BY GSA
+           XX*  ADP SCHEDULE CONTRACT WITH IBM CORP.
+           XX*
+           XX*******************************************************************
+           XX*
+           XX*  COMPILE AND LINK EDIT A COBOL PROGRAM
+           XX*
+           XX*  PARAMETER  DEFAULT VALUE    USAGE
+           XX*   LNGPRFX   IGY620           PREFIX FOR LANGUAGE DATA SET NAMES
+           XX*   LIBPRFX   CEE              PREFIX FOR LIBRARY DATA SET NAMES
+           XX*   PGMLIB    &&GOSET          DATA SET NAME FOR LOAD MODULE
+           XX*   GOPGM     GO               MEMBER NAME FOR LOAD MODULE
+           XX*
+           XX*  CALLER MUST SUPPLY //COBOL.SYSIN DD ...
+           XX*
+           XX*  CALLER MUST ALSO SUPPLY //COBOL.SYSLIB DD ... for COPY statement
+           XX*
+         4 XXCOBOL  EXEC PGM=IGYCRCTL,REGION=0M
+         5 XXSTEPLIB  DD  DSNAME=&LNGPRFX..SIGYCOMP,DISP=SHR
+           IEFC653I SUBSTITUTION JCL - DSNAME=IGY420.SIGYCOMP,DISP=SHR
+         6 XX         DD  DSNAME=&LIBPRFX..SCEERUN,DISP=SHR
+           IEFC653I SUBSTITUTION JCL - DSNAME=CEE.SCEERUN,DISP=SHR
+         7 XX         DD  DSNAME=&LIBPRFX..SCEERUN2,DISP=SHR
+           IEFC653I SUBSTITUTION JCL - DSNAME=CEE.SCEERUN2,DISP=SHR
+         8 XXSYSPRINT DD  SYSOUT=*
+         9 XXSYSLIN   DD  DSNAME=&&LOADSET,UNIT=SYSALLDA,
+           XX             DISP=(MOD,PASS),SPACE=(CYL,(1,1))
+        10 XXSYSUT1   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        11 XXSYSUT2   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        12 XXSYSUT3   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        13 XXSYSUT4   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        14 XXSYSUT5   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        15 XXSYSUT6   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        16 XXSYSUT7   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        17 XXSYSUT8   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        18 XXSYSUT9   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        19 XXSYSUT10  DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        20 XXSYSUT11  DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        21 XXSYSUT12  DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        22 XXSYSUT13  DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        23 XXSYSUT14  DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        24 XXSYSUT15  DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        25 XXSYSMDECK DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+        26 //SYSIN        DD DSN=KC03CCA.LANG.SOURCE(COBOL),DISP=SHR
+        27 //COBOL.SYSLIB DD DSN=CEE.SCEESAMP,DISP=SHR
+        28 XXLKED   EXEC PGM=IEWBLINK,COND=(8,LT,COBOL),REGION=0M
+        29 XXSYSLIB   DD  DSNAME=&LIBPRFX..SCEELKED,DISP=SHR
+           IEFC653I SUBSTITUTION JCL - DSNAME=CEE.SCEELKED,DISP=SHR
+        30 XX         DD  DSNAME=&LIBPRFX..SCEELKEX,DISP=SHR
+           IEFC653I SUBSTITUTION JCL - DSNAME=CEE.SCEELKEX,DISP=SHR
+        31 XXSYSPRINT DD  SYSOUT=*
+        32 XXSYSLIN   DD  DSNAME=&&LOADSET,DISP=(OLD,DELETE)
+        33 XX         DD  DDNAME=SYSIN
+        34 //LKED.SYSLMOD DD DSN=KC03CCA.LANG.LOAD(COBOL),DISP=SHR
+           X/SYSLMOD  DD  DSNAME=&PGMLIB(&GOPGM),
+           X/             SPACE=(CYL,(1,1,1)),
+           X/             UNIT=SYSALLDA,DISP=(MOD,PASS),DSNTYPE=LIBRARY
+           IEFC653I SUBSTITUTION JCL - DSNAME=&&GOSET(GO),SPACE=(CYL,(1,1,1)),UN
+           DSNTYPE=LIBRARY
+        35 XXSYSUT1   DD  UNIT=SYSALLDA,SPACE=(CYL,(1,1))
+  STMT NO. MESSAGE
+         2 IEFC001I PROCEDURE IGYWCL WAS EXPANDED USING SYSTEM LIBRARY VENDOR.PR
+        35 IEF686I DDNAME REFERRED TO ON DDNAME KEYWORD IN PRIOR STEP WAS NOT RE
+ ICH70001I KC03CCA  LAST ACCESS AT 08:40:02 ON WEDNESDAY, APRIL 7, 2021
+ IEFA111I KC03CCAD IS USING THE FOLLOWING JOB RELATED SETTINGS:
+          SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+ IEF236I ALLOC. FOR KC03CCAD COBOL STEP1
+ IEF237I 185A ALLOCATED TO STEPLIB
+ IEF237I 1001 ALLOCATED TO
+ IEF237I 1001 ALLOCATED TO
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IGD101I SMS ALLOCATED TO DDNAME (SYSLIN  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.LOADSET.H01 )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT1  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185338    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT2  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185339    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT3  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185340    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT4  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185341    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT5  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185342    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT6  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185343    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT7  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185344    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT8  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185345    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT9  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185346    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT10 )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185347    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT11 )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185348    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT12 )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185349    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT13 )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185350    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT14 )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185351    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT15 )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185352    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD101I SMS ALLOCATED TO DDNAME (SYSMDECK)
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185353    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IGD103I SMS ALLOCATED TO DDNAME SYSIN
+ IEF237I 1001 ALLOCATED TO SYSLIB
+ IEF142I KC03CCAD COBOL STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IEF285I   IGY420.SIGYCOMP                              KEPT
+ IEF285I   VOL SER NOS= VTIGYG.
+ IEF285I   CEE.SCEERUN                                  KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IEF285I   CEE.SCEERUN2                                 KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IEF285I   KC03CCA.KC03CCAD.JOB06981.D0000101.?         SYSOUT
+ IGD106I SYS21097.T084120.RA000.KC03CCAD.LOADSET.H01  PASSED,    DDNAME=SYSLIN
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185338     DELETED,   DDNAME=SYSUT1
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185339     DELETED,   DDNAME=SYSUT2
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185340     DELETED,   DDNAME=SYSUT3
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185341     DELETED,   DDNAME=SYSUT4
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185342     DELETED,   DDNAME=SYSUT5
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185343     DELETED,   DDNAME=SYSUT6
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185344     DELETED,   DDNAME=SYSUT7
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185345     DELETED,   DDNAME=SYSUT8
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185346     DELETED,   DDNAME=SYSUT9
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185347     DELETED,   DDNAME=SYSUT10
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185348     DELETED,   DDNAME=SYSUT11
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185349     DELETED,   DDNAME=SYSUT12
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185350     DELETED,   DDNAME=SYSUT13
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185351     DELETED,   DDNAME=SYSUT14
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185352     DELETED,   DDNAME=SYSUT15
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185353     DELETED,   DDNAME=SYSMDECK
+ IGD104I KC03CCA.LANG.SOURCE                          RETAINED,  DDNAME=SYSIN
+ IEF285I   CEE.SCEESAMP                                 KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IEF373I STEP/COBOL   /START 2021097.0841
+ IEF032I STEP/COBOL   /STOP  2021097.0841
+         CPU:     0 HR  00 MIN  00.01 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+         VIRT:  7916K  SYS:   264K  EXT:  1636376K  SYS:    11976K
+         ATB- REAL:                  1080K  SLOTS:                     0K
+              VIRT- ALLOC:      17M SHRD:       0M
+ IEF236I ALLOC. FOR KC03CCAD LKED STEP1
+ IEF237I 1001 ALLOCATED TO SYSLIB
+ IEF237I 1001 ALLOCATED TO
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IGD103I SMS ALLOCATED TO DDNAME SYSLIN
+ IEF237I DMY  ALLOCATED TO
+ IGD103I SMS ALLOCATED TO DDNAME SYSLMOD
+ IGD101I SMS ALLOCATED TO DDNAME (SYSUT1  )
+         DSN (SYS21097.T084120.RA000.KC03CCAD.R0185354    )
+         STORCLAS (TEMPSC) MGMTCLAS (        ) DATACLAS (        )
+         VOL SER NOS= TEMP00
+ IEF142I KC03CCAD LKED STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IEF285I   CEE.SCEELKED                                 KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IEF285I   CEE.SCEELKEX                                 KEPT
+ IEF285I   VOL SER NOS= VTMVSC.
+ IEF285I   KC03CCA.KC03CCAD.JOB06981.D0000102.?         SYSOUT
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.LOADSET.H01  DELETED,   DDNAME=SYSLIN
+ IGD104I KC03CCA.LANG.LOAD                            RETAINED,  DDNAME=SYSLMOD
+ IGD105I SYS21097.T084120.RA000.KC03CCAD.R0185354     DELETED,   DDNAME=SYSUT1
+ IEF373I STEP/LKED    /START 2021097.0841
+ IEF032I STEP/LKED    /STOP  2021097.0841
+         CPU:     0 HR  00 MIN  00.01 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+         VIRT:   100K  SYS:   260K  EXT:     1768K  SYS:    11968K
+         ATB- REAL:                  1080K  SLOTS:                     0K
+              VIRT- ALLOC:      17M SHRD:       0M
+ IEF375I  JOB/KC03CCAD/START 2021097.0841
+ IEF033I  JOB/KC03CCAD/STOP  2021097.0841
+         CPU:     0 HR  00 MIN  00.02 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+1PP 5655-S71 IBM Enterprise COBOL for z/OS  4.2.0                         Date 0
+0Options in effect:
+  NOADATA
+    ADV
+    QUOTE
+    ARITH(COMPAT)
+  NOAWO
+  NOBLOCK0
+    BUFSIZE(4096)
+  NOCICS
+    CODEPAGE(1140)
+  NOCOMPILE(S)
+  NOCURRENCY
+    DATA(31)
+  NODATEPROC
+    DBCS
+  NODECK
+  NODIAGTRUNC
+  NODLL
+  NODUMP
+  NODYNAM
+  NOEXIT
+  NOEXPORTALL
+  NOFASTSRT
+    FLAG(I,I)
+  NOFLAGMIG4
+  NOFLAGSTD
+    INTDATE(ANSI)
+    LANGUAGE(EN)
+  NOLIB
+    LINECOUNT(60)
+  NOLIST
+  NOMAP
+  NOMDECK
+  NONAME
+    NSYMBOL(NATIONAL)
+  NONUMBER
+    NUMPROC(NOPFD)
+    OBJECT
+  NOOFFSET
+  NOOPTIMIZE
+    OUTDD(SYSOUT)
+    PGMNAME(COMPAT)
+    RENT
+    RMODE(AUTO)
+    SEQUENCE
+    SIZE(MAX)
+    SOURCE
+    SPACE(1)
+  NOSQL
+    SQLCCSID
+  NOSSRANGE
+  NOTERM
+  NOTEST
+  NOTHREAD
+    TRUNC(STD)
+  NOVBREF
+  NOWORD
+    XMLPARSE(XMLSS)
+1PP 5655-S71 IBM Enterprise COBOL for z/OS  4.2.0                         Date 0
+0   XREF(FULL)
+  NOZONECHECK
+    YEARWINDOW(1900)
+    ZWB
+1PP 5655-S71 IBM Enterprise COBOL for z/OS  4.2.0               HELLO1    Date 0
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6--
+0  000001               ********************************************************
+   000002               *  This program demonstrates the following Language
+   000003               *  Envinonment callable
+   000004               *  services : CEEMOUT, CEELOCT, CEEDATE
+   000005               ********************************************************
+   000006               ********************************************************
+   000007               **           I D          D I V I S I O N
+   000008               ********************************************************
+   000009                IDENTIFICATION DIVISION.
+   000010                PROGRAM-ID.    HELLO1.
+   000011                AUTHOR.        NICK.
+   000012               ********************************************************
+   000013               **           D A T A      D I V I S I O N
+   000014               ********************************************************
+   000015                DATA DIVISION.
+   000016                WORKING-STORAGE SECTION.
+   000017                01 DATE-TIME.
+   000018                  02 THE-DATE.
+   000019                    03  CURRENT-YEAR     PIC 9(4).
+   000020                    03  CURRENT-MONTH    PIC 99.
+   000021                    03  CURRENT-DAY      PIC 99.
+   000022                  02 THE-TIME.
+   000023               * HHMMSSSS   S = S/100
+   000024                   03  CURRENT-HOUR     PIC 99.
+   000025                   03  CURRENT-MINUTE   PIC 99.
+   000026                   03  CURRENT-SECOND   PIC 9(4).
+   000027                01 PRINT-DATE-TIME.
+   000028                  02 PRINT-DATE.
+   000029                    03  PRINT-YEAR     PIC 9(4).
+   000030                    03  PRINT-SLASH    PIC X VALUE '/'.
+   000031                    03  PRINT-MONTH    PIC 99.
+   000032                    03  PRINT-SLASH2   PIC X VALUE '/'.
+   000033                    03  PRINT-DAY      PIC 99.
+   000034                  02 PRINT-TIME.
+   000035               * HHMMSSSS   S = S/100
+   000036                   03  PRINT-HOUR     PIC 99.
+   000037                   03  PRINT-COLON    PIC X VALUE ':'.
+   000038                   03  PRINT-MINUTE   PIC 99.
+   000039                   03  PRINT-COLON    PIC X VALUE ':'.
+   000040                   03  PRINT-SECOND   PIC 99.
+   000041               ********************************************************
+   000042               **           P R O C      D I V I S I O N
+   000043               ********************************************************
+   000044                PROCEDURE DIVISION.
+   000045                000-DISPLAY-DATE-TIME.
+   000046                    ACCEPT  THE-DATE FROM DATE YYYYMMDD.
+   000047                    ACCEPT  THE-TIME FROM TIME.
+   000048                    MOVE CURRENT-YEAR TO PRINT-YEAR.
+   000049                    MOVE CURRENT-MONTH TO PRINT-MONTH.
+   000050                    MOVE CURRENT-DAY TO PRINT-DAY.
+   000051                    MOVE CURRENT-HOUR TO PRINT-HOUR.
+   000052                    MOVE CURRENT-MINUTE TO PRINT-MINUTE.
+   000053                    MOVE CURRENT-SECOND TO PRINT-SECOND.
+   000054                    DISPLAY "HELLO WORLD ON ", PRINT-DATE, " AT ", PRIN
+   000055                    STOP RUN.
+1PP 5655-S71 IBM Enterprise COBOL for z/OS  4.2.0               HELLO1    Date 0
+0An "M" preceding a data-name reference indicates that the data-name is modified
+
+  Defined   Cross-reference of data names   References
+
+       21   CURRENT-DAY. . . . . . . . . .  50
+       24   CURRENT-HOUR . . . . . . . . .  51
+       25   CURRENT-MINUTE . . . . . . . .  52
+       20   CURRENT-MONTH. . . . . . . . .  49
+       26   CURRENT-SECOND . . . . . . . .  53
+       19   CURRENT-YEAR . . . . . . . . .  48
+       17   DATE-TIME
+       37   PRINT-COLON
+       39   PRINT-COLON
+       28   PRINT-DATE . . . . . . . . . .  54
+       27   PRINT-DATE-TIME
+       33   PRINT-DAY. . . . . . . . . . .  M50
+       36   PRINT-HOUR . . . . . . . . . .  M51
+       38   PRINT-MINUTE . . . . . . . . .  M52
+       31   PRINT-MONTH. . . . . . . . . .  M49
+       40   PRINT-SECOND . . . . . . . . .  M53
+       30   PRINT-SLASH
+       32   PRINT-SLASH2
+       34   PRINT-TIME . . . . . . . . . .  54
+       29   PRINT-YEAR . . . . . . . . . .  M48
+       18   THE-DATE . . . . . . . . . . .  M46
+       22   THE-TIME . . . . . . . . . . .  M47
+1PP 5655-S71 IBM Enterprise COBOL for z/OS  4.2.0               HELLO1    Date 0
+0Context usage is indicated by the letter preceding a procedure-name reference.
+ These letters and their meanings are:
+     A = ALTER (procedure-name)
+     D = GO TO (procedure-name) DEPENDING ON
+     E = End of range of (PERFORM) through (procedure-name)
+     G = GO TO (procedure-name)
+     P = PERFORM (procedure-name)
+     T = (ALTER) TO PROCEED TO (procedure-name)
+     U = USE FOR DEBUGGING (procedure-name)
+
+  Defined   Cross-reference of procedures   References
+
+       45   000-DISPLAY-DATE-TIME
+1PP 5655-S71 IBM Enterprise COBOL for z/OS  4.2.0               HELLO1    Date 0
+0 Defined   Cross-reference of programs     References
+
+       10   HELLO1
+-* Statistics for COBOL program HELLO1:
+ *    Source records = 55
+ *    Data Division statements = 22
+ *    Procedure Division statements = 10
+0End of compilation 1,  program HELLO1,  no statements flagged.
+0Return code 0
+1z/OS V2 R3 BINDER     08:41:24 WEDNESDAY APRIL  7, 2021
+ BATCH EMULATOR  JOB(KC03CCAD) STEP(STEP1   ) PGM= IEWBLINK  PROCEDURE(LKED    )
+
+
+
+                                 *** O P E R A T I O N   S U M M A R Y   R E P O
+
+1PROCESSING OPTIONS:
+
+    ALIASES             NO
+    ALIGN2              NO
+    AMODE               UNSPECIFIED
+    CALL                YES
+    CASE                UPPER
+    COMPAT              UNSPECIFIED
+    COMPRESS            AUTO
+    DCBS                NO
+    DYNAM               NO
+    EXTATTR             UNSPECIFIED
+    EXITS:              NONE
+    FILL                NONE
+    GID                 UNSPECIFIED
+    HOBSET              NO
+    INFO                NO
+    LET                 04
+    LINECT              060
+    LIST                SUMMARY
+    LISTPRIV            NO
+    LONGPARM            NO
+    MAP                 NO
+    MAXBLK              032760
+    MODMAP              NO
+    MSGLEVEL            00
+    OVLY                NO
+    PRINT               YES
+    RES                 NO
+    REUSABILITY         UNSPECIFIED
+    RMODE               UNSPECIFIED
+    RMODEX              NO
+    SIGN                NO
+    STORENX             NOREPLACE
+    STRIPCL             NO
+    STRIPSEC            NO
+    SYMTRACE
+    TERM                NO
+    TRAP                ON
+    UID                 UNSPECIFIED
+    UPCASE              NO
+    WKSPACE             000000K,000000K
+    XCAL                NO
+    XREF                NO
+    ***END OF OPTIONS***
+
+
+
+
+1SAVE OPERATION SUMMARY:
+
+    MEMBER NAME         COBOL
+    LOAD LIBRARY        KC03CCA.LANG.LOAD
+    PROGRAM TYPE        LOAD MODULE
+    VOLUME SERIAL       KCTR16
+    MAX BLOCK           27920
+    DISPOSITION         ADDED NEW
+    TIME OF SAVE        08.41.25  APR  7, 2021
+
+
+1SAVE MODULE ATTRIBUTES:
+
+    AC                  000
+    AMODE                31
+    COMPRESSION         NONE
+    DC                  NO
+    EDITABLE            YES
+    EXCEEDS 16MB        NO
+    EXECUTABLE          YES
+    LONGPARM            NO
+    MIGRATABLE          YES
+    OL                  NO
+    OVLY                NO
+    PACK,PRIME          NO,NO
+    PAGE ALIGN          NO
+    REFR                NO
+    RENT                NO
+    REUS                NO
+    RMODE               ANY
+    SCTR                NO
+    SIGN                NO
+    SSI
+    SYM GENERATED       NO
+    TEST                NO
+    XPLINK              NO
+    MODULE SIZE (HEX)   00001310
+
+
+1 ENTRY POINT AND ALIAS SUMMARY:
+
+  NAME:            ENTRY TYPE AMODE C_OFFSET CLASS NAME        STATUS
+
+  HELLO1            MAIN_EP      31 00000000 B_TEXT
+
+                          *** E N D   O F   O P E R A T I O N   S U M M A R Y
+
+
+
+
+1z/OS V2 R3 BINDER     08:41:24 WEDNESDAY APRIL  7, 2021
+ BATCH EMULATOR  JOB(KC03CCAD) STEP(STEP1   ) PGM= IEWBLINK  PROCEDURE(LKED    )
+ IEW2008I 0F03 PROCESSING COMPLETED.  RETURN CODE =  0.
+
+
+
+1----------------------
+ MESSAGE SUMMARY REPORT
+ ----------------------
+  TERMINAL MESSAGES      (SEVERITY = 16)
+  NONE
+
+  SEVERE MESSAGES        (SEVERITY = 12)
+  NONE
+
+  ERROR MESSAGES         (SEVERITY = 08)
+  NONE
+
+  WARNING MESSAGES       (SEVERITY = 04)
+  NONE
+
+  INFORMATIONAL MESSAGES (SEVERITY = 00)
+  2008
+
+
+  **** END OF MESSAGE SUMMARY REPORT ****
+
+
