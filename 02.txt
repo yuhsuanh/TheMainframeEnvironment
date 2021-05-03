@@ -1,0 +1,132 @@
+CEC – Central Electronic Complex
+CMC – Central Management Complex
+CPU – Central Processing Unit
+PU – Processor Units
+CP – Central Processor
+
+IFL – Integrated Facility for Linux
+	run various distributions of Linux, plus OpenSolaris
+
+ICF – Integrated Coupling Facility
+	used to manage data and distribute workload among z/OS systems in a parallel sysplex
+
+SAP – System Assist Processor
+	dedicated I/O processor (one included with each box; extras rarely needed)
+
+zAAP – System z Application Assist Processor
+	used on z990/z890 through zEC12/zBC12 to handle Java workloads under z/OS
+
+zIIP – System z Integrated Information Processor
+	used on z9EC/z9BC through current to handle selected (originally mostly DB2) and later also Java workloads under z/OS
+	zIIPs no longer available with z13
+
+
+The central processor box contains the processors, memory, control circuits and channel interfaces
+	Early systems had up to 16 channels
+	modern systems have 1024 (256 * 4 Logical Channel Subsystems)
+
+
+In the early design, the device address was physically related.
+This addressing scheme is still in use today only virtualized
+
+address: 132
+ 	first(1) channel number
+ 	second(3) control unit number
+ 	third(2) device number
+
+
+Parallel channel
+The maximum data rate up to 4.5 MB, the maximum distance up to 122 meters.
+These specifications can be limited by the connected control units and devices.
+
+
+The central processor box contains the processors, memory, control circuits, and interfaces for channels.
+A channel provides an independent data and control path between I/O devices and memory.
+
+->Channels connect to control units
+A control unit contains logic to work with a particular type of I/O device. 
+Today’s channel paths are dynamically attached to control units as the workload demands. 
+Devices is not defined, but it is usually more economical to place most of the circuitry in the control unit.
+
+
+->Control units connect to devices (disk drives, tape drives, communication interfaces)
+
+CEC new design includes
+	- CEC modular componentry
+	- I/O housing
+	- I/O connectivity
+	- I/O operation
+	- Partitioning of the system
+
+
+Most modern mainframes use switches(dynamically connected) between the channels and the control units. 
+
+
+
+ESCON - Enterprise Systems Connection
+	is a data connection created by IBM commonly
+	 used to connect their mainframe computers to peripheral devices.
+	 replaced the older, slower parallel Bus&Tag channel technology
+	 use a director to support dynamic switching
+	 providing peripheral sharing
+	 Replaced by newer FICON technology
+
+FICON - Fiber Connectivity
+	the next generation high-speed input/output (I/O) interface
+
+ESCON vs FICON
+ESCON
+   - 20 Mbytes / Second
+   - Lots of “dead time”.  One active request at a time.
+   -  One target control unit
+	
+FICON
+  - 400 Mbytes / Second, moving to 800
+  - Uses FCP standard
+  - Fiber Optic cable (less space under floor)
+  - Currently, up to 64 simultaneous “I/O packets” at a time with up to 64 different control units
+  - Supports Cascading switches
+
+
+
+MIF - Multiple Image Facility
+	for sharing channels among LPARs
+
+CHPID addresses are two hex digits (FF / 256)
+Multiple partitions can share CHPIDs (MIF)
+I/O subsystem layer exists between the operating system and the CHPIDs
+
+
+
+I/O control
+	es a control file IOCDS that translates physical I/O addresses into device numbers
+	Device numbers are assigned by the system programmer when creating the IODF and IOCDS and are arbitrary (but not random!)
+	three or four hex digits (modern machines)
+
+
+Each Logical Channel Subsystem has a set of Subchannels 
+
+
+System Control and Partitioning
+LPARs - independent logical partitions (Memory)
+Each LPAR supports an independent operating system (OS) loaded by a separate initial program load (IPL) operation.
+
+
+Logical Partitions (LPARs) or Servers
+A system programmer can assign different operating environments to each partition with isolation
+An LPAR can be assigned a number of dedicated or shared processors.
+Each  LPAR can have different storage (CSTOR) assigned depending on workload requirements.
+The I/O channels (CHPIDs)  are assigned either statically or dynamically as needed by server workload.
+Provides an opportunity to consolidate distributed environments to a centralized location
+
+CSTOR - central storage
+	in past literature may also be referred to as main storage, provides the system with directly addressable, fast-access electronic storage of data.
+
+
+Characteristics of LPARs
+LPARs are the equivalent of a separate mainframe for most practical purposes
+Each LPAR runs its own operating system
+Devices can be shared across several LPARs
+Processors can be dedicated or shared
+When shared each LPAR is assigned a number of logical processors (up to the maximum number of physical processors)
+Each LPAR is independent
